@@ -8,7 +8,7 @@ const props = defineProps(rendererProps<ControlElement>())
 const { control, handleChange } = useJsonFormsEnumControl(props)
 
 const items = computed(() =>
-  (control.value.options || []).map((opt: { label: string; value: any }) => ({
+  (control.value.options || []).map((opt: { label: string, value: unknown }) => ({
     label: opt.label,
     value: opt.value
   }))
@@ -19,7 +19,7 @@ const modelValue = computed({
     const d = control.value.data
     return d !== undefined && d !== null ? d : undefined
   },
-  set: (val: any) => handleChange(control.value.path, val)
+  set: (val: unknown) => handleChange(control.value.path, val)
 })
 
 const inputId = computed(() => `select-${control.value.path.replace(/[^a-zA-Z0-9]/g, '-')}`)

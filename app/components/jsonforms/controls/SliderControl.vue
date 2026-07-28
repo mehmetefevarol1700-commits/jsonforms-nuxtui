@@ -54,13 +54,13 @@ const inputId = computed(() => `slider-${control.value.path.replace(/[^a-zA-Z0-9
         :disabled="!control.enabled"
         class="w-full"
         color="primary"
-        @update:model-value="singleValue = $event"
         :ui="{
           rail: 'h-2 rounded-full bg-gray-200 dark:bg-gray-700',
           track: 'h-2 rounded-full bg-primary-500',
           thumb: 'w-5 h-5 rounded-full bg-white border-2 border-primary-500 shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900',
           tick: 'h-1 rounded bg-gray-300 dark:bg-gray-600'
         }"
+        @update:model-value="singleValue = $event"
       />
 
       <USlider
@@ -74,13 +74,13 @@ const inputId = computed(() => `slider-${control.value.path.replace(/[^a-zA-Z0-9
         class="w-full"
         color="primary"
         range
-        @update:model-value="rangeValue = $event"
         :ui="{
           rail: 'h-2 rounded-full bg-gray-200 dark:bg-gray-700',
           track: 'h-2 rounded-full bg-primary-500',
           thumb: 'w-5 h-5 rounded-full bg-white border-2 border-primary-500 shadow-lg transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900',
           tick: 'h-1 rounded bg-gray-300 dark:bg-gray-600'
         }"
+        @update:model-value="rangeValue = $event"
       />
     </div>
   </UFormField>

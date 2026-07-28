@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { useJsonFormsControl, useJsonFormsArrayControl, rendererProps } from '@jsonforms/vue'
+import { useJsonFormsControl, useJsonFormsArrayControl, rendererProps, DispatchRenderer } from '@jsonforms/vue'
 import type { ControlElement, JsonSchema } from '@jsonforms/core'
 import { ref, computed, watch } from 'vue'
-import { DispatchRenderer } from '@jsonforms/vue'
 import { UIcon, UInput } from '#components'
 
 const props = defineProps(rendererProps<ControlElement>())
@@ -15,7 +14,7 @@ const draggedIndex = ref<number | null>(null)
 const items = computed(() => control.value.data || [])
 
 const itemSchema = computed<JsonSchema | undefined>(() =>
-  (control.value.schema as any)?.items as JsonSchema | undefined
+  (control.value.schema as Record<string, unknown>)?.items as JsonSchema | undefined
 )
 
 const detailUischema = computed(() => control.value.uischemas?.[0] ?? null)
@@ -26,8 +25,8 @@ const labelKey = computed(() => {
   return Object.keys(schemaProps).find(k => k === 'name' || k === 'title' || k === 'label' || k === 'task') || null
 })
 
-const generateDefaults = (props: Record<string, JsonSchema>): Record<string, any> => {
-  const obj: Record<string, any> = {}
+const generateDefaults = (props: Record<string, JsonSchema>): Record<string, unknown> => {
+  const obj: Record<string, unknown> = {}
   for (const [key, prop] of Object.entries(props)) {
     if (prop.type === 'boolean') obj[key] = false
     else if (prop.type === 'integer' || prop.type === 'number') obj[key] = prop.default ?? (prop.minimum ?? (prop.type === 'integer' ? 0 : 0.0))
@@ -40,7 +39,7 @@ const generateDefaults = (props: Record<string, JsonSchema>): Record<string, any
 
 const handleAddItem = () => {
   const sch = itemSchema.value
-  let newItem: any
+  let newItem: unknown
   if (!sch) {
     newItem = ''
   } else if (sch.properties) {
@@ -105,7 +104,7 @@ const isPrimitive = computed(() => {
   return !sch || !sch.properties || sch.type === 'string' || sch.type === 'number' || sch.type === 'integer' || sch.type === 'boolean'
 })
 
-const updatePrimitiveItem = (index: number, value: any) => {
+const updatePrimitiveItem = (index: number, value: unknown) => {
   const arr = [...(control.value.data || [])]
   arr[index] = value
   handleChange(control.value.path, arr)
@@ -122,7 +121,10 @@ const updatePrimitiveItem = (index: number, value: any) => {
     class="mb-4 last:mb-0 w-full block"
     :ui="{ container: 'space-y-4' }"
   >
-    <div class="space-y-3" v-if="items.length > 0">
+    <div
+      v-if="items.length > 0"
+      class="space-y-3"
+    >
       <div
         v-for="(item, index) in items"
         :key="`${control.path}-${index}`"
@@ -133,7 +135,10 @@ const updatePrimitiveItem = (index: number, value: any) => {
         @dragend="handleDragEnd"
       >
         <div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 w-6 h-full flex items-center justify-center text-gray-300 dark:text-gray-500 hover:text-primary-500 cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity">
-          <UIcon name="i-heroicons-bars-3" class="w-5 h-5" />
+          <UIcon
+            name="i-heroicons-bars-3"
+            class="w-5 h-5"
+          />
         </div>
 
         <UCard
@@ -153,46 +158,61 @@ const updatePrimitiveItem = (index: number, value: any) => {
             <div class="flex items-center gap-1">
               <button
                 v-if="index > 0"
-                @click="handleMoveItem(index, index - 1)"
                 class="p-1.5 rounded-lg text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
                 aria-label="Yukarı taşı"
+                @click="handleMoveItem(index, index - 1)"
               >
-                <UIcon name="i-heroicons-chevron-up" class="w-4 h-4" />
+                <UIcon
+                  name="i-heroicons-chevron-up"
+                  class="w-4 h-4"
+                />
               </button>
               <button
                 v-if="index < items.length - 1"
-                @click="handleMoveItem(index, index + 1)"
                 class="p-1.5 rounded-lg text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
                 aria-label="Aşağı taşı"
+                @click="handleMoveItem(index, index + 1)"
               >
-                <UIcon name="i-heroicons-chevron-down" class="w-4 h-4" />
+                <UIcon
+                  name="i-heroicons-chevron-down"
+                  class="w-4 h-4"
+                />
               </button>
               <button
-                @click="toggleItem(index)"
                 class="p-1.5 rounded-lg text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
                 :aria-label="expandedItems.has(index) ? 'Daralt' : 'Genişlet'"
+                @click="toggleItem(index)"
               >
-                <UIcon :name="expandedItems.has(index) ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'" class="w-5 h-5" />
+                <UIcon
+                  :name="expandedItems.has(index) ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
+                  class="w-5 h-5"
+                />
               </button>
               <button
-                @click="handleRemoveItem(index)"
                 class="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                 aria-label="Sil"
+                @click="handleRemoveItem(index)"
               >
-                <UIcon name="i-heroicons-trash" class="w-5 h-5" />
+                <UIcon
+                  name="i-heroicons-trash"
+                  class="w-5 h-5"
+                />
               </button>
             </div>
           </template>
 
           <template #default>
             <Transition name="slide-fade">
-              <div v-show="expandedItems.has(index)" class="space-y-4">
+              <div
+                v-show="expandedItems.has(index)"
+                class="space-y-4"
+              >
                 <UInput
                   v-if="isPrimitive"
                   :model-value="String(item)"
-                  @update:model-value="(val) => updatePrimitiveItem(index, val)"
                   placeholder="Öğe değerini girin..."
                   class="w-full"
+                  @update:model-value="(val) => updatePrimitiveItem(index, val)"
                 />
                 <DispatchRenderer
                   v-else-if="detailUischema && itemSchema"
@@ -202,7 +222,12 @@ const updatePrimitiveItem = (index: number, value: any) => {
                   :renderers="control.renderers"
                   :cells="control.cells"
                 />
-                <p v-else class="text-sm text-gray-400 italic">Şema görünümü yapılandırılmamış</p>
+                <p
+                  v-else
+                  class="text-sm text-gray-400 italic"
+                >
+                  Şema görünümü yapılandırılmamış
+                </p>
               </div>
             </Transition>
           </template>
@@ -210,18 +235,46 @@ const updatePrimitiveItem = (index: number, value: any) => {
       </div>
     </div>
 
-    <div v-else class="text-center py-12 bg-gray-50/50 dark:bg-gray-800/50 rounded-2xl border-2 border-dashed border-gray-200/50 dark:border-gray-700/50">
-      <UIcon name="i-heroicons-inbox-stack" class="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3" />
-      <p class="text-gray-500 dark:text-gray-400 mb-4">{{ control.label || 'Liste' }} henüz eklenmedi</p>
-      <UButton @click="handleAddItem" color="primary" size="sm" class="gap-2">
-        <UIcon name="i-heroicons-plus" class="w-5 h-5" />
+    <div
+      v-else
+      class="text-center py-12 bg-gray-50/50 dark:bg-gray-800/50 rounded-2xl border-2 border-dashed border-gray-200/50 dark:border-gray-700/50"
+    >
+      <UIcon
+        name="i-heroicons-inbox-stack"
+        class="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3"
+      />
+      <p class="text-gray-500 dark:text-gray-400 mb-4">
+        {{ control.label || 'Liste' }} henüz eklenmedi
+      </p>
+      <UButton
+        color="primary"
+        size="sm"
+        class="gap-2"
+        @click="handleAddItem"
+      >
+        <UIcon
+          name="i-heroicons-plus"
+          class="w-5 h-5"
+        />
         İlk öğeyi ekle
       </UButton>
     </div>
 
-    <div v-if="items.length > 0" class="text-center pt-2">
-      <UButton @click="handleAddItem" color="primary" variant="subtle" size="sm" class="gap-2">
-        <UIcon name="i-heroicons-plus" class="w-5 h-5" />
+    <div
+      v-if="items.length > 0"
+      class="text-center pt-2"
+    >
+      <UButton
+        color="primary"
+        variant="subtle"
+        size="sm"
+        class="gap-2"
+        @click="handleAddItem"
+      >
+        <UIcon
+          name="i-heroicons-plus"
+          class="w-5 h-5"
+        />
         Yeni Öğe Ekle
       </UButton>
     </div>

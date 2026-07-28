@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { useJsonFormsLayout, rendererProps } from '@jsonforms/vue'
+import { useJsonFormsLayout, rendererProps, DispatchRenderer } from '@jsonforms/vue'
 import type { Categorization } from '@jsonforms/core'
 import { ref, computed } from 'vue'
-import { DispatchRenderer } from '@jsonforms/vue'
 
 const props = defineProps(rendererProps<Categorization>())
 
@@ -13,7 +12,7 @@ const categories = computed(() => {
   if (!catUischema?.elements) return []
   return catUischema.elements.map((element, index) => ({
     uischema: element,
-    label: (element as any).label || `Sekme ${index + 1}`,
+    label: (element as { label?: string }).label || `Sekme ${index + 1}`,
     schema: layout.value.schema,
     path: layout.value.path,
     renderers: layout.value.renderers,
@@ -31,13 +30,18 @@ const setActiveCategory = (index: number) => {
 </script>
 
 <template>
-  <div v-if="layout.visible" class="space-y-6">
+  <div
+    v-if="layout.visible"
+    class="space-y-6"
+  >
     <!-- Modern Segmented Tabs -->
-    <div class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl" role="tablist">
+    <div
+      class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl"
+      role="tablist"
+    >
       <button
         v-for="(category, index) in categories"
         :key="category.path"
-        @click="setActiveCategory(index)"
         role="tab"
         :aria-selected="activeIndex === index"
         :class="[
@@ -46,6 +50,7 @@ const setActiveCategory = (index: number) => {
             ? 'bg-white dark:bg-gray-800 text-primary-600 dark:text-primary-400 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700'
             : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
         ]"
+        @click="setActiveCategory(index)"
       >
         {{ category.label }}
       </button>
@@ -55,8 +60,8 @@ const setActiveCategory = (index: number) => {
     <div class="relative min-h-[200px]">
       <div
         v-for="(category, index) in categories"
-        :key="category.path"
         v-show="activeIndex === index"
+        :key="category.path"
         class="w-full"
       >
         <div class="flex flex-col gap-0 animate-fade-in">

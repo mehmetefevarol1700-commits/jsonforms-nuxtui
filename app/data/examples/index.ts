@@ -4,9 +4,9 @@ export interface ShowcaseExample {
   description: string
   category: string
   icon: string
-  schema: any
-  uischema: any
-  data: any
+  schema: Record<string, unknown>
+  uischema: Record<string, unknown>
+  data: unknown
 }
 
 export interface ExampleCategory {

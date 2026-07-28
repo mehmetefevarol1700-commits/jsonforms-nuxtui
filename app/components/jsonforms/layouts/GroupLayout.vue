@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useJsonFormsLayout, rendererProps } from '@jsonforms/vue'
+import { useJsonFormsLayout, rendererProps, DispatchRenderer } from '@jsonforms/vue'
 import type { Layout } from '@jsonforms/core'
-import { DispatchRenderer } from '@jsonforms/vue'
 
 const props = defineProps(rendererProps<Layout>())
 
@@ -19,11 +18,20 @@ const { layout } = useJsonFormsLayout(props)
     class="w-full"
   >
     <template #header>
-      <div v-if="layout.label || layout.description" class="space-y-1">
-        <h3 v-if="layout.label" class="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+      <div
+        v-if="layout.label || layout.description"
+        class="space-y-1"
+      >
+        <h3
+          v-if="layout.label"
+          class="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2"
+        >
           {{ layout.label }}
         </h3>
-        <p v-if="layout.description" class="text-sm text-gray-500 dark:text-gray-400">
+        <p
+          v-if="layout.description"
+          class="text-sm text-gray-500 dark:text-gray-400"
+        >
           {{ layout.description }}
         </p>
       </div>

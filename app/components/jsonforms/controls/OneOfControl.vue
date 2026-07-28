@@ -23,7 +23,7 @@ const hasProperties = computed(() =>
 const discriminatorKey = computed(() => {
   for (const opt of oneOfSchemas.value) {
     for (const key of Object.keys(opt.properties || {})) {
-      if ((opt.properties as any)?.[key]?.const !== undefined) return key
+      if ((opt.properties as Record<string, JsonSchema>)?.[key]?.const !== undefined) return key
     }
   }
   return ''
@@ -31,11 +31,12 @@ const discriminatorKey = computed(() => {
 
 const options = computed(() =>
   oneOfSchemas.value.map((s, i) => {
-    let value: any = undefined
+    let value: unknown
     const props = s.properties || {}
     for (const key of Object.keys(props)) {
-      if ((props as any)[key]?.const !== undefined) {
-        value = (props as any)[key].const
+      const prop = (props as Record<string, JsonSchema>)[key]
+      if (prop?.const !== undefined) {
+        value = prop.const
         break
       }
     }
@@ -52,23 +53,23 @@ const selectedValue = computed({
     }
     const data = control.value.data
     if (!hasProperties.value && data !== undefined && data !== null) {
-      const idx = options.value.findIndex(o => {
+      const idx = options.value.findIndex((o) => {
         const t = o.schema?.type
-        return (t === 'string' && typeof data === 'string') ||
-               ((t === 'integer' || t === 'number') && typeof data === 'number')
+        return (t === 'string' && typeof data === 'string')
+          || ((t === 'integer' || t === 'number') && typeof data === 'number')
       })
       if (idx >= 0) return idx
     }
     return data ?? undefined
   },
-  set: (val: any) => {
+  set: (val: unknown) => {
     const opt = options.value.find(o => o.value === val)
     if (opt?.schema) {
       const props = opt.schema.properties
       if (props && Object.keys(props).length > 0) {
-        const initial: any = {}
+        const initial: Record<string, unknown> = {}
         for (const key of Object.keys(props)) {
-          const ps = (props as any)[key]
+          const ps = (props as Record<string, JsonSchema>)[key]
           if (ps.const !== undefined) {
             initial[key] = ps.const
           } else if (ps.default !== undefined) {
@@ -89,10 +90,22 @@ const selectedValue = computed({
         return
       }
       const st = opt.schema.type
-      if (st === 'string') { handleChange(control.value.path, ''); return }
-      if (st === 'integer') { handleChange(control.value.path, 0); return }
-      if (st === 'number') { handleChange(control.value.path, 0); return }
-      if (st === 'boolean') { handleChange(control.value.path, false); return }
+      if (st === 'string') {
+        handleChange(control.value.path, '')
+        return
+      }
+      if (st === 'integer') {
+        handleChange(control.value.path, 0)
+        return
+      }
+      if (st === 'number') {
+        handleChange(control.value.path, 0)
+        return
+      }
+      if (st === 'boolean') {
+        handleChange(control.value.path, false)
+        return
+      }
     }
     handleChange(control.value.path, val)
   }
@@ -111,9 +124,9 @@ const childSchema = computed<JsonSchema | null>(() => {
   if (!hasProperties.value) return null
   const dv = currentDiscValue.value
   if (!dv) return null
-  const match = oneOfSchemas.value.find(s => {
+  const match = oneOfSchemas.value.find((s) => {
     const props = s.properties || {}
-    return Object.values(props).some((p: any) => p.const === dv)
+    return Object.values(props).some((p: Record<string, unknown>) => p.const === dv)
   })
   return (match as JsonSchema) || null
 })
@@ -122,9 +135,9 @@ const childUischema = computed<UISchemaElement | null>(() => {
   if (!hasProperties.value) return null
   const dv = currentDiscValue.value
   if (!dv) return null
-  const match = oneOfSchemas.value.find(s => {
+  const match = oneOfSchemas.value.find((s) => {
     const props = s.properties || {}
-    return Object.values(props).some((p: any) => p.const === dv)
+    return Object.values(props).some(p => (p as Record<string, unknown>).const === dv)
   })
   if (!match?.properties) return null
   const dk = discriminatorKey.value
@@ -134,7 +147,7 @@ const childUischema = computed<UISchemaElement | null>(() => {
     elements: keys.map(key => ({
       type: 'Control',
       scope: `#/properties/${key}`,
-      label: (match.properties as any)[key]?.title || key
+      label: (match.properties as Record<string, JsonSchema>)[key]?.title || key
     }))
   }
 })
@@ -162,7 +175,10 @@ const inputId = computed(() => `oneof-${control.value.path.replace(/[^a-zA-Z0-9]
       placeholder="Seçiniz..."
       @update:model-value="selectedValue = $event"
     />
-    <div v-if="childUischema && childSchema" class="border-l-2 border-primary-200 dark:border-primary-800 pl-3 ml-1">
+    <div
+      v-if="childUischema && childSchema"
+      class="border-l-2 border-primary-200 dark:border-primary-800 pl-3 ml-1"
+    >
       <DispatchRenderer
         :schema="childSchema"
         :uischema="childUischema"

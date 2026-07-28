@@ -34,7 +34,7 @@ const inputId = computed(() => `colorpicker-${control.value.path.replace(/[^a-zA
         :readonly="control.readonly"
         class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden cursor-pointer transition-transform hover:scale-105 p-0.5 bg-white dark:bg-gray-800"
         @input="colorValue = ($event.target as HTMLInputElement).value"
-      />
+      >
       <div class="flex-1 min-w-0">
         <UInput
           :model-value="colorValue"
@@ -44,7 +44,9 @@ const inputId = computed(() => `colorpicker-${control.value.path.replace(/[^a-zA
           placeholder="#RRGGBB"
           @update:model-value="colorValue = $event"
         />
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">HEX format (örn: #3B82F6)</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          HEX format (örn: #3B82F6)
+        </p>
       </div>
     </div>
   </UFormField>

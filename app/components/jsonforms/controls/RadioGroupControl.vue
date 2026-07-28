@@ -8,7 +8,7 @@ const props = defineProps(rendererProps<ControlElement>())
 const { control, handleChange } = useJsonFormsEnumControl(props)
 
 const items = computed(() =>
-  (control.value.options || []).map((opt: { label: string; value: any }) => ({
+  (control.value.options || []).map((opt: { label: string, value: unknown }) => ({
     label: opt.label,
     value: opt.value
   }))
@@ -19,7 +19,7 @@ const modelValue = computed({
     const d = control.value.data
     return d !== undefined && d !== null ? d : undefined
   },
-  set: (val: any) => handleChange(control.value.path, val)
+  set: (val: unknown) => handleChange(control.value.path, val)
 })
 
 const inputId = computed(() => `radio-${control.value.path.replace(/[^a-zA-Z0-9]/g, '-')}`)
@@ -35,7 +35,11 @@ const inputId = computed(() => `radio-${control.value.path.replace(/[^a-zA-Z0-9]
     class="mb-4 last:mb-0 w-full block"
     :ui="{ container: 'space-y-2' }"
   >
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" role="radiogroup" :aria-label="control.label">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+      role="radiogroup"
+      :aria-label="control.label"
+    >
       <label
         v-for="item in items"
         :key="item.value"
@@ -48,9 +52,9 @@ const inputId = computed(() => `radio-${control.value.path.replace(/[^a-zA-Z0-9]
           :value="item.value"
           :checked="modelValue === item.value"
           :disabled="!control.enabled || control.readonly"
-          @change="modelValue = item.value"
           class="sr-only"
-        />
+          @change="modelValue = item.value"
+        >
         <div
           class="relative p-4 rounded-xl border-2 transition-all duration-200 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm"
           :class="[

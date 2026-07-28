@@ -6,7 +6,7 @@ const colorMode = useColorMode()
 const appConfig = useAppConfig()
 
 const open = ref(false)
-const twColors = shallowRef<any>(null)
+const twColors = shallowRef<Record<string, Record<string, string>> | null>(null)
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 
 const primaryColors = [
@@ -62,22 +62,22 @@ const applyColorToVars = (kind: 'primary' | 'neutral', color: string) => {
 }
 
 const setPrimary = (color: string) => {
-  selectedPrimary.value = color as any
-  appConfig.ui.colors!.primary = color as any
+  selectedPrimary.value = color as 'green'
+  appConfig.ui.colors!.primary = color as 'green'
   applyColorToVars('primary', color)
   localStorage.setItem('theme-primary', color)
 }
 
 const setNeutral = (color: string) => {
-  selectedNeutral.value = color as any
-  appConfig.ui.colors!.neutral = color as any
+  selectedNeutral.value = color as 'slate'
+  appConfig.ui.colors!.neutral = color as 'slate'
   applyColorToVars('neutral', color)
   localStorage.setItem('theme-neutral', color)
 }
 
 const setRadius = (val: string) => {
   selectedRadius.value = val
-  appConfig.ui.radius = val as any
+  appConfig.ui.radius = val as '0.375'
   document.documentElement.style.setProperty('--ui-radius', val + 'rem')
   localStorage.setItem('theme-radius', val)
 }
@@ -104,7 +104,7 @@ onMounted(async () => {
   try {
     const mod = await import('tailwindcss/colors')
     twColors.value = mod.default || mod
-  } catch {}
+  } catch { /* tailwindcss/colors not available */ }
   const savedPrimary = localStorage.getItem('theme-primary')
   const savedNeutral = localStorage.getItem('theme-neutral')
   const savedRadius = localStorage.getItem('theme-radius')
@@ -117,11 +117,14 @@ onMounted(async () => {
 <template>
   <div class="relative">
     <button
-      @click="open = !open"
       class="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
       aria-label="Tema seçici"
+      @click="open = !open"
     >
-      <UIcon name="i-heroicons-paint-brush" class="w-4 h-4 text-gray-600 dark:text-gray-300" />
+      <UIcon
+        name="i-heroicons-paint-brush"
+        class="w-4 h-4 text-gray-600 dark:text-gray-300"
+      />
     </button>
 
     <div
@@ -138,36 +141,40 @@ onMounted(async () => {
         <div class="max-h-[80vh] overflow-y-auto p-3 space-y-4">
           <!-- Primary Colors -->
           <div>
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Primary</h4>
+            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              Primary
+            </h4>
             <div class="grid grid-cols-8 gap-1.5">
               <button
                 v-for="c in primaryColors"
                 :key="c.value"
-                @click="setPrimary(c.value)"
                 :class="[
                   'w-6 h-6 rounded-full transition-transform hover:scale-110',
                   c.class,
                   selectedPrimary === c.value ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 ring-gray-400 dark:ring-gray-500 scale-110' : ''
                 ]"
                 :title="c.name"
+                @click="setPrimary(c.value)"
               />
             </div>
           </div>
 
           <!-- Neutral Colors -->
           <div>
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Neutral</h4>
+            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              Neutral
+            </h4>
             <div class="flex gap-2">
               <button
                 v-for="c in neutralColors"
                 :key="c.value"
-                @click="setNeutral(c.value)"
                 :class="[
                   'flex-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-all',
                   selectedNeutral === c.value
                     ? 'bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 ]"
+                @click="setNeutral(c.value)"
               >
                 {{ c.name }}
               </button>
@@ -176,18 +183,20 @@ onMounted(async () => {
 
           <!-- Radius -->
           <div>
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Radius</h4>
+            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              Radius
+            </h4>
             <div class="flex gap-2">
               <button
                 v-for="r in radiusOptions"
                 :key="r.value"
-                @click="setRadius(r.value)"
                 :class="[
                   'flex-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-all',
                   selectedRadius === r.value
                     ? 'bg-primary-500 text-white'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 ]"
+                @click="setRadius(r.value)"
               >
                 {{ r.label }}
               </button>
@@ -196,42 +205,53 @@ onMounted(async () => {
 
           <!-- Color Mode -->
           <div>
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Color Mode</h4>
+            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              Color Mode
+            </h4>
             <div class="flex gap-2">
               <button
-                @click="setColorMode('light')"
                 :class="[
                   'flex-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1',
                   currentColorMode === 'light'
                     ? 'bg-primary-500 text-white'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 ]"
+                @click="setColorMode('light')"
               >
-                <UIcon name="i-heroicons-sun" class="w-3.5 h-3.5" />
+                <UIcon
+                  name="i-heroicons-sun"
+                  class="w-3.5 h-3.5"
+                />
                 Light
               </button>
               <button
-                @click="setColorMode('dark')"
                 :class="[
                   'flex-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1',
                   currentColorMode === 'dark'
                     ? 'bg-primary-500 text-white'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 ]"
+                @click="setColorMode('dark')"
               >
-                <UIcon name="i-heroicons-moon" class="w-3.5 h-3.5" />
+                <UIcon
+                  name="i-heroicons-moon"
+                  class="w-3.5 h-3.5"
+                />
                 Dark
               </button>
               <button
-                @click="setColorMode('system')"
                 :class="[
                   'flex-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1',
                   currentColorMode === 'system'
                     ? 'bg-primary-500 text-white'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 ]"
+                @click="setColorMode('system')"
               >
-                <UIcon name="i-heroicons-computer-desktop" class="w-3.5 h-3.5" />
+                <UIcon
+                  name="i-heroicons-computer-desktop"
+                  class="w-3.5 h-3.5"
+                />
                 System
               </button>
             </div>
@@ -239,10 +259,13 @@ onMounted(async () => {
 
           <!-- Export -->
           <button
-            @click="exportConfig"
             class="w-full px-3 py-2 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-1.5"
+            @click="exportConfig"
           >
-            <UIcon name="i-heroicons-document-duplicate" class="w-3.5 h-3.5" />
+            <UIcon
+              name="i-heroicons-document-duplicate"
+              class="w-3.5 h-3.5"
+            />
             app.config.ts kopyala
           </button>
         </div>

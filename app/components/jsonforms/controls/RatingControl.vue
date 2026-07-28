@@ -13,9 +13,6 @@ const ratingValue = computed({
 })
 
 const maxRating = computed(() => control.value.schema?.maximum ?? 5)
-const allowHalf = computed(() => control.value.schema?.multipleOf === 0.5)
-
-const inputId = computed(() => `rating-${control.value.path.replace(/[^a-zA-Z0-9]/g, '-')}`)
 </script>
 
 <template>
@@ -28,15 +25,22 @@ const inputId = computed(() => `rating-${control.value.path.replace(/[^a-zA-Z0-9
     class="mb-4 last:mb-0 w-full block"
     :ui="{ container: 'space-y-2' }"
   >
-    <div class="flex items-center gap-2" role="radiogroup" :aria-label="control.label">
-      <template v-for="i in maxRating" :key="i">
+    <div
+      class="flex items-center gap-2"
+      role="radiogroup"
+      :aria-label="control.label"
+    >
+      <template
+        v-for="i in maxRating"
+        :key="i"
+      >
         <button
           type="button"
-          @click="ratingValue = i"
           :disabled="!control.enabled || control.readonly"
           :aria-label="`${i} ${i === 1 ? 'yıldız' : 'yıldız'}`"
           :aria-pressed="ratingValue >= i"
           class="flex items-center justify-center p-1 rounded transition-all duration-150 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          @click="ratingValue = i"
         >
           <UIcon
             :name="ratingValue >= i ? 'i-heroicons-star-solid' : 'i-heroicons-star'"
@@ -46,7 +50,10 @@ const inputId = computed(() => `rating-${control.value.path.replace(/[^a-zA-Z0-9
         </button>
       </template>
     </div>
-    <div v-if="ratingValue > 0" class="text-sm text-gray-500 dark:text-gray-400">
+    <div
+      v-if="ratingValue > 0"
+      class="text-sm text-gray-500 dark:text-gray-400"
+    >
       {{ ratingValue }} / {{ maxRating }} {{ maxRating === 1 ? 'yıldız' : 'yıldız' }}
     </div>
   </UFormField>

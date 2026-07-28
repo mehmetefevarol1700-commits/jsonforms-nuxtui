@@ -19,7 +19,7 @@ import {
   uiTypeIs,
   schemaTypeIs,
   formatIs,
-  optionIs,
+  optionIs
 } from '@jsonforms/core'
 import type { JsonFormsRendererRegistryEntry } from '@jsonforms/core'
 import { markRaw } from 'vue'
@@ -91,5 +91,5 @@ export const nuxtUiRenderers: JsonFormsRendererRegistryEntry[] = [
   { tester: rankWith(3, isStringControl), renderer: markRaw(TextControl) },
 
   // ========== FALLBACK (rank 1) ==========
-  { tester: rankWith(1, () => true), renderer: markRaw(UnknownRenderer) },
+  { tester: rankWith(1, () => true), renderer: markRaw(UnknownRenderer) }
 ]

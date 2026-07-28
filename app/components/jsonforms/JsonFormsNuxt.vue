@@ -10,10 +10,10 @@ import { ref, computed, watch } from 'vue'
 const props = withDefaults(defineProps<{
   schema?: JsonSchema
   uischema?: UISchemaElement
-  data?: any
+  data?: unknown
   renderers?: JsonFormsRendererRegistryEntry[]
   cells?: JsonFormsCellRendererRegistryEntry[]
-  config?: any
+  config?: unknown
   readonly?: boolean
   validationMode?: ValidationMode
   ajv?: Ajv
@@ -35,19 +35,27 @@ const retryKey = ref(0)
 watch(() => [props.schema, props.uischema], () => {
   renderError.value = null
 })
-
-const handleError = (err: any) => {
-  renderError.value = err?.message || String(err)
-  retryKey.value++
-}
 </script>
 
 <template>
   <div>
-    <div v-if="renderError" class="p-4 border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20 rounded-lg text-sm">
-      <p class="font-semibold text-red-700 dark:text-red-400 mb-1">Form render hatası</p>
-      <p class="text-red-600 dark:text-red-300 font-mono text-xs break-all">{{ renderError }}</p>
-      <UButton size="xs" color="red" variant="outline" class="mt-2" @click="renderError = null; retryKey++">
+    <div
+      v-if="renderError"
+      class="p-4 border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20 rounded-lg text-sm"
+    >
+      <p class="font-semibold text-red-700 dark:text-red-400 mb-1">
+        Form render hatası
+      </p>
+      <p class="text-red-600 dark:text-red-300 font-mono text-xs break-all">
+        {{ renderError }}
+      </p>
+      <UButton
+        size="xs"
+        color="red"
+        variant="outline"
+        class="mt-2"
+        @click="renderError = null; retryKey++"
+      >
         Tekrar Dene
       </UButton>
     </div>
