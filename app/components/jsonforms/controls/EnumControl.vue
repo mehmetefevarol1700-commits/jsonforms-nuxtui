@@ -37,20 +37,12 @@ const inputId = computed(() => `select-${control.value.path.replace(/[^a-zA-Z0-9
   >
     <USelect
       :id="inputId"
-      :items="items"
+      :items="items as any"
       :model-value="modelValue"
       :disabled="!control.enabled"
       :readonly="control.readonly"
       class="w-full"
-      placeholder="Seçiniz..."
-      :ui="{
-        root: 'relative',
-        button: 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-sm transition-all duration-200 hover:border-primary-300/50 dark:hover:border-primary-700/50 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:shadow-sm',
-        list: 'bg-white dark:bg-gray-900 border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-lg overflow-hidden',
-        option: 'px-4 py-2.5 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors cursor-pointer',
-        selectedIcon: 'text-primary-500 dark:text-primary-400',
-        trailingIcon: 'text-gray-400 dark:text-gray-500'
-      }"
+      placeholder="Select..."
       @update:model-value="modelValue = $event"
     />
   </UFormField>

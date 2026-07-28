@@ -20,7 +20,7 @@
 
       <div class="space-y-4">
         <p class="text-center text-gray-600 dark:text-gray-400">
-          Nuxt UI v3 bileşenlerini ve JSON Forms entegrasyonunu canlı test edebileceğiniz interaktif bir vitrine hoş geldiniz.
+          Interactive showcase to test Nuxt UI v3 components and JSON Forms integration with live editing.
         </p>
 
         <UButton
@@ -31,12 +31,12 @@
           icon="i-heroicons-arrow-right"
           :ui="{ base: 'gap-2' }"
         >
-          Showcase'a Git
+          Go to Showcase
         </UButton>
 
         <div class="pt-4 border-t border-gray-200/50 dark:border-gray-800/50">
           <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 text-center">
-            Mevcut Kategoriler
+            Categories
           </h3>
           <div class="grid grid-cols-3 gap-3 text-xs">
             <NuxtLink

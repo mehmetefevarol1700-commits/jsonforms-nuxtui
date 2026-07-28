@@ -7,9 +7,10 @@ const props = defineProps(rendererProps<ControlElement>())
 
 const { control, handleChange } = useJsonFormsControl(props)
 
-interface OneOfSchema extends JsonSchema {
+type OneOfSchema = JsonSchema & {
   title?: string
   properties?: Record<string, JsonSchema>
+  type?: string
 }
 
 const oneOfSchemas = computed<OneOfSchema[]>(() =>
@@ -17,7 +18,7 @@ const oneOfSchemas = computed<OneOfSchema[]>(() =>
 )
 
 const hasProperties = computed(() =>
-  oneOfSchemas.value.some(s => s.properties && Object.keys(s.properties).length > 0)
+  oneOfSchemas.value.some((s: OneOfSchema) => s.properties && Object.keys(s.properties).length > 0)
 )
 
 const discriminatorKey = computed(() => {
@@ -41,7 +42,7 @@ const options = computed(() =>
       }
     }
     if (value === undefined) value = i
-    return { label: s.title || `Option ${i + 1}`, value, schema: s }
+    return { label: s.title || `Option ${i + 1}`, value: value as string, schema: s }
   })
 )
 
@@ -53,7 +54,7 @@ const selectedValue = computed({
     }
     const data = control.value.data
     if (!hasProperties.value && data !== undefined && data !== null) {
-      const idx = options.value.findIndex((o) => {
+      const idx = options.value.findIndex((o: { label: string, value: string, schema: OneOfSchema }) => {
         const t = o.schema?.type
         return (t === 'string' && typeof data === 'string')
           || ((t === 'integer' || t === 'number') && typeof data === 'number')
@@ -63,18 +64,19 @@ const selectedValue = computed({
     return data ?? undefined
   },
   set: (val: unknown) => {
-    const opt = options.value.find(o => o.value === val)
+    const opt = options.value.find((o: { label: string, value: string, schema: OneOfSchema }) => o.value === val)
     if (opt?.schema) {
       const props = opt.schema.properties
       if (props && Object.keys(props).length > 0) {
         const initial: Record<string, unknown> = {}
         for (const key of Object.keys(props)) {
           const ps = (props as Record<string, JsonSchema>)[key]
+          if (!ps) continue
           if (ps.const !== undefined) {
             initial[key] = ps.const
           } else if (ps.default !== undefined) {
             initial[key] = ps.default
-          } else if (ps.type === 'string' || ps.type === undefined) {
+          } else if (ps.type === 'string') {
             initial[key] = ''
           } else if (ps.type === 'integer' || ps.type === 'number') {
             initial[key] = 0
@@ -124,7 +126,7 @@ const childSchema = computed<JsonSchema | null>(() => {
   if (!hasProperties.value) return null
   const dv = currentDiscValue.value
   if (!dv) return null
-  const match = oneOfSchemas.value.find((s) => {
+  const match = oneOfSchemas.value.find((s: OneOfSchema) => {
     const props = s.properties || {}
     return Object.values(props).some((p: Record<string, unknown>) => p.const === dv)
   })
@@ -135,7 +137,7 @@ const childUischema = computed<UISchemaElement | null>(() => {
   if (!hasProperties.value) return null
   const dv = currentDiscValue.value
   if (!dv) return null
-  const match = oneOfSchemas.value.find((s) => {
+  const match = oneOfSchemas.value.find((s: OneOfSchema) => {
     const props = s.properties || {}
     return Object.values(props).some(p => (p as Record<string, unknown>).const === dv)
   })
@@ -167,12 +169,12 @@ const inputId = computed(() => `oneof-${control.value.path.replace(/[^a-zA-Z0-9]
   >
     <USelect
       :id="inputId"
-      :items="options"
+      :items="options as any"
       :model-value="selectedValue"
       :disabled="!control.enabled"
       :readonly="control.readonly"
       class="w-full"
-      placeholder="Seçiniz..."
+      placeholder="Select..."
       @update:model-value="selectedValue = $event"
     />
     <div

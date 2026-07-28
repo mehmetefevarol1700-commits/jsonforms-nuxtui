@@ -129,34 +129,34 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
       >
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Canlı Form Verisi
+            Live Form Data
           </h3>
           <div class="flex items-center gap-2">
             <UButton
               size="xs"
               variant="outline"
-              color="gray"
+              color="neutral"
               class="gap-1.5"
-              @click="copyToClipboard(formattedData.value, 'data')"
+              @click="copyToClipboard(formattedData, 'data')"
             >
               <UIcon
                 name="i-heroicons-document-duplicate"
                 class="w-4 h-4"
               />
-              Kopyala
+              Copy
             </UButton>
             <UButton
               size="xs"
               variant="outline"
               color="primary"
               class="gap-1.5"
-              @click="downloadJson(props.formData, `${example.value?.id}-data.json`)"
+              @click="downloadJson(props.formData, `${example?.id}-data.json`)"
             >
               <UIcon
                 name="i-heroicons-arrow-down-tray"
                 class="w-4 h-4"
               />
-              İndir
+              Download
             </UButton>
           </div>
         </div>
@@ -167,7 +167,7 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
           v-if="Object.keys(props.formData || {}).length === 0"
           class="mt-4 text-center text-gray-500 dark:text-gray-400 text-sm"
         >
-          Form henüz doldurulmadı. Sol menüden bir örnek seçip form alanlarını doldurun.
+          No form data yet. Select an example from the sidebar and fill out the form.
         </p>
       </div>
 
@@ -179,13 +179,13 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
       >
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            JSON Schema Tanımı
+            JSON Schema
           </h3>
           <div class="flex items-center gap-2">
             <UButton
               size="xs"
               variant="outline"
-              color="gray"
+              color="neutral"
               class="gap-1.5"
               @click="copyToClipboard(schemaText, 'schema')"
             >
@@ -193,20 +193,20 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
                 name="i-heroicons-document-duplicate"
                 class="w-4 h-4"
               />
-              Kopyala
+              Copy
             </UButton>
             <UButton
               size="xs"
               variant="outline"
               color="primary"
               class="gap-1.5"
-              @click="downloadJson(props.schema, `${example.value?.id}-schema.json`)"
+              @click="downloadJson(props.schema, `${example?.id}-schema.json`)"
             >
               <UIcon
                 name="i-heroicons-arrow-down-tray"
                 class="w-4 h-4"
               />
-              İndir
+              Download
             </UButton>
           </div>
         </div>
@@ -231,7 +231,7 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
           v-else-if="!schemaError && schemaText"
           class="mt-1.5 text-xs text-green-500 dark:text-green-400"
         >
-          Geçerli JSON
+          Valid JSON
         </p>
       </div>
 
@@ -243,13 +243,13 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
       >
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            UI Schema (Layout Tanımı)
+            UI Schema (Layout)
           </h3>
           <div class="flex items-center gap-2">
             <UButton
               size="xs"
               variant="outline"
-              color="gray"
+              color="neutral"
               class="gap-1.5"
               @click="copyToClipboard(uischemaText, 'uischema')"
             >
@@ -257,20 +257,20 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
                 name="i-heroicons-document-duplicate"
                 class="w-4 h-4"
               />
-              Kopyala
+              Copy
             </UButton>
             <UButton
               size="xs"
               variant="outline"
               color="primary"
               class="gap-1.5"
-              @click="downloadJson(props.uischema, `${example.value?.id}-uischema.json`)"
+              @click="downloadJson(props.uischema, `${example?.id}-uischema.json`)"
             >
               <UIcon
                 name="i-heroicons-arrow-down-tray"
                 class="w-4 h-4"
               />
-              İndir
+              Download
             </UButton>
           </div>
         </div>
@@ -295,7 +295,7 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
           v-else-if="!uischemaError && uischemaText"
           class="mt-1.5 text-xs text-green-500 dark:text-green-400"
         >
-          Geçerli JSON
+          Valid JSON
         </p>
       </div>
     </div>
@@ -308,23 +308,23 @@ const schemaCount = computed(() => example.value?.schema ? Object.keys(example.v
             {{ Object.keys(props.formData || {}).length }}
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            Doldurulan Alan
+            Fields Filled
           </p>
         </div>
         <div>
           <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            {{ example.value?.schema?.required?.length || 0 }}
+            {{ ((example?.schema as { required?: unknown[] })?.required)?.length || 0 }}
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            Zorunlu Alan
+            Required Fields
           </p>
         </div>
         <div>
           <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            {{ Object.keys(example.value?.schema?.properties || {}).length }}
+            {{ Object.keys((example?.schema as Record<string, unknown>)?.properties || {}).length }}
           </p>
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            Toplam Alan
+            Total Fields
           </p>
         </div>
       </div>

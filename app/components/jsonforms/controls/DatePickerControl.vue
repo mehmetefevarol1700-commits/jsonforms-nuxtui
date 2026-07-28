@@ -14,7 +14,7 @@ const dateValue = computed({
 
 const inputId = computed(() => `datepicker-${control.value.path.replace(/[^a-zA-Z0-9]/g, '-')}`)
 const inputType = computed(() => control.value.schema?.format === 'time' ? 'time' : control.value.schema?.format === 'date-time' ? 'datetime-local' : 'date')
-const placeholder = computed(() => control.value.schema?.format === 'time' ? 'Saat seçin...' : control.value.schema?.format === 'date-time' ? 'Tarih ve saat seçin...' : 'Tarih seçin...')
+const placeholder = computed(() => control.value.schema?.format === 'time' ? 'Select time...' : control.value.schema?.format === 'date-time' ? 'Select date and time...' : 'Select date...')
 const minDate = computed(() => control.value.schema?.minimum)
 const maxDate = computed(() => control.value.schema?.maximum)
 </script>

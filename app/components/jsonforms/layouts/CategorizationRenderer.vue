@@ -21,11 +21,11 @@ const categories = computed(() => {
   }))
 })
 
-const activeIndex = ref(layout.value.activeCategory ?? 0)
+const activeIndex = ref((layout.value as Record<string, unknown>).activeCategory as number ?? 0)
 
 const setActiveCategory = (index: number) => {
   activeIndex.value = index
-  layout.value.activeCategory = index
+  ;(layout.value as Record<string, unknown>).activeCategory = index
 }
 </script>
 

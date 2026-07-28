@@ -45,7 +45,7 @@ const inputId = computed(() => `colorpicker-${control.value.path.replace(/[^a-zA
           @update:model-value="colorValue = $event"
         />
         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-          HEX format (örn: #3B82F6)
+          HEX format (e.g., #3B82F6)
         </p>
       </div>
     </div>

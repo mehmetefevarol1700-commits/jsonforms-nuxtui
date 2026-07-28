@@ -46,7 +46,7 @@ const radiusOptions = [
 
 const selectedPrimary = ref(appConfig.ui.colors?.primary || 'green')
 const selectedNeutral = ref(appConfig.ui.colors?.neutral || 'slate')
-const selectedRadius = ref(appConfig.ui.radius || '0.375')
+const selectedRadius = ref((appConfig.ui as Record<string, unknown>).radius as string || '0.375')
 
 const currentColorMode = computed(() => colorMode.value)
 
@@ -77,7 +77,7 @@ const setNeutral = (color: string) => {
 
 const setRadius = (val: string) => {
   selectedRadius.value = val
-  appConfig.ui.radius = val as '0.375'
+  ;(appConfig.ui as Record<string, unknown>).radius = val
   document.documentElement.style.setProperty('--ui-radius', val + 'rem')
   localStorage.setItem('theme-radius', val)
 }
@@ -103,7 +103,7 @@ const exportConfig = () => {
 onMounted(async () => {
   try {
     const mod = await import('tailwindcss/colors')
-    twColors.value = mod.default || mod
+    twColors.value = (mod.default || mod) as unknown as Record<string, Record<string, string>>
   } catch { /* tailwindcss/colors not available */ }
   const savedPrimary = localStorage.getItem('theme-primary')
   const savedNeutral = localStorage.getItem('theme-neutral')
@@ -118,7 +118,7 @@ onMounted(async () => {
   <div class="relative">
     <button
       class="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-      aria-label="Tema seçici"
+      aria-label="Theme picker"
       @click="open = !open"
     >
       <UIcon
@@ -266,7 +266,7 @@ onMounted(async () => {
               name="i-heroicons-document-duplicate"
               class="w-3.5 h-3.5"
             />
-            app.config.ts kopyala
+            Copy app.config.ts
           </button>
         </div>
       </div>

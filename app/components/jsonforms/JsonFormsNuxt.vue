@@ -3,8 +3,8 @@ import { JsonForms } from '@jsonforms/vue'
 import type { JsonSchema, UISchemaElement, ValidationMode, JsonFormsRendererRegistryEntry, JsonFormsCellRendererRegistryEntry } from '@jsonforms/core'
 import type { JsonFormsChangeEvent } from '@jsonforms/vue'
 import { nuxtUiRenderers } from './renderers'
-import type Ajv from 'ajv'
 import type { ErrorObject } from 'ajv'
+import type Ajv from 'ajv'
 import { ref, computed, watch } from 'vue'
 
 const props = withDefaults(defineProps<{
@@ -16,8 +16,8 @@ const props = withDefaults(defineProps<{
   config?: unknown
   readonly?: boolean
   validationMode?: ValidationMode
-  ajv?: Ajv
-  additionalErrors?: ErrorObject[]
+  ajv?: InstanceType<typeof Ajv>
+  additionalErrors?: ErrorObject<string, Record<string, unknown>, unknown>[]
 }>(), {
   cells: () => [],
   readonly: false
@@ -44,19 +44,19 @@ watch(() => [props.schema, props.uischema], () => {
       class="p-4 border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20 rounded-lg text-sm"
     >
       <p class="font-semibold text-red-700 dark:text-red-400 mb-1">
-        Form render hatası
+        Form render error
       </p>
       <p class="text-red-600 dark:text-red-300 font-mono text-xs break-all">
         {{ renderError }}
       </p>
       <UButton
         size="xs"
-        color="red"
+        color="error"
         variant="outline"
         class="mt-2"
         @click="renderError = null; retryKey++"
       >
-        Tekrar Dene
+        Retry
       </UButton>
     </div>
     <JsonForms

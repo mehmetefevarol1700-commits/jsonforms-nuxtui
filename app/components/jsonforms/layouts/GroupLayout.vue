@@ -19,7 +19,7 @@ const { layout } = useJsonFormsLayout(props)
   >
     <template #header>
       <div
-        v-if="layout.label || layout.description"
+        v-if="layout.label || (layout.uischema as unknown as Record<string, unknown>).description"
         class="space-y-1"
       >
         <h3
@@ -29,10 +29,10 @@ const { layout } = useJsonFormsLayout(props)
           {{ layout.label }}
         </h3>
         <p
-          v-if="layout.description"
+          v-if="(layout.uischema as unknown as Record<string, unknown>).description"
           class="text-sm text-gray-500 dark:text-gray-400"
         >
-          {{ layout.description }}
+          {{ (layout.uischema as unknown as Record<string, unknown>).description }}
         </p>
       </div>
     </template>

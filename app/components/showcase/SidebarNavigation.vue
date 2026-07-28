@@ -64,7 +64,7 @@ const isCategoryExpanded = (categoryId: string) => {
       'fixed left-0 top-0 z-40 h-full bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-r border-gray-200/50 dark:border-gray-800/50 transition-all duration-300 flex flex-col',
       collapsed ? 'w-16' : 'w-56'
     ]"
-    aria-label="Navigasyon Menüsü"
+    aria-label="Navigation Menu"
   >
     <!-- Header -->
     <div class="flex items-center justify-between h-12 px-3 border-b border-gray-200/50 dark:border-gray-800/50 shrink-0">
@@ -86,7 +86,7 @@ const isCategoryExpanded = (categoryId: string) => {
       </div>
       <button
         class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shrink-0"
-        :aria-label="collapsed ? 'Genişlet' : 'Daralt'"
+        :aria-label="collapsed ? 'Expand' : 'Collapse'"
         @click="$emit('toggle-collapse')"
       >
         <UIcon
@@ -100,7 +100,7 @@ const isCategoryExpanded = (categoryId: string) => {
     <nav
       ref="navRef"
       class="flex-1 overflow-y-auto"
-      aria-label="Ana navigasyon"
+      aria-label="Main navigation"
     >
       <!-- Sticky Search -->
       <div
@@ -109,7 +109,7 @@ const isCategoryExpanded = (categoryId: string) => {
       >
         <UInput
           v-model="searchQuery"
-          placeholder="Ara..."
+          placeholder="Search..."
           size="xs"
           :ui="{
             root: 'relative',
@@ -208,7 +208,7 @@ const isCategoryExpanded = (categoryId: string) => {
             class="w-6 h-6 mx-auto text-gray-300 dark:text-gray-600 mb-2"
           />
           <p class="text-xs text-gray-500 dark:text-gray-400">
-            Sonuç bulunamadı
+            No results found
           </p>
         </div>
       </div>
@@ -221,7 +221,7 @@ const isCategoryExpanded = (categoryId: string) => {
         class="text-center"
       >
         <p class="text-[9px] text-gray-400 dark:text-gray-500 truncate">
-          {{ examples.length }} örnek
+          {{ examples.length }} examples
         </p>
       </div>
     </div>

@@ -42,7 +42,7 @@ const inputId = computed(() => `radio-${control.value.path.replace(/[^a-zA-Z0-9]
     >
       <label
         v-for="item in items"
-        :key="item.value"
+        :key="String(item.value)"
         class="group relative cursor-pointer"
       >
         <input

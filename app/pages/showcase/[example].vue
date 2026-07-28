@@ -11,7 +11,7 @@
             <div class="flex items-center gap-3">
               <button
                 class="lg:hidden p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                aria-label="Menüyü aç/kapat"
+                aria-label="Toggle menu"
                 @click="sidebarCollapsed = !sidebarCollapsed"
               >
                 <UIcon
@@ -39,7 +39,7 @@
 
               <button
                 class="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                :aria-label="isDark ? 'Açık mod' : 'Koyu mod'"
+                :aria-label="isDark ? 'Light mode' : 'Dark mode'"
                 @click="toggleDarkMode"
               >
                 <ClientOnly>
@@ -109,10 +109,10 @@
                 <div class="flex items-center justify-between px-5 py-3 border-b border-gray-200/50 dark:border-gray-800/50 shrink-0">
                   <div class="min-w-0">
                     <h2 class="text-base font-bold text-gray-900 dark:text-gray-100 truncate">
-                      {{ currentExample?.title || 'Örnek Seçin' }}
+                      {{ currentExample?.title || 'Select Example' }}
                     </h2>
                     <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
-                      {{ currentExample?.description || 'Sol menüden seçim yapın.' }}
+                      {{ currentExample?.description || 'Choose from the sidebar.' }}
                     </p>
                   </div>
                   <UBadge
@@ -150,10 +150,10 @@
                         class="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3"
                       />
                       <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                        Bir Örnek Seçin
+                        Select an Example
                       </h3>
                       <p class="text-xs text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
-                        Sol menüden seçim yaparak formu görün.
+                        Choose an example from the sidebar to see the form.
                       </p>
                     </div>
                   </div>
@@ -184,7 +184,7 @@
                 :schema="liveSchema"
                 :uischema="liveUischema"
                 @update:schema="liveSchema = $event; schemaVersion++"
-                @update:uischema="liveUischema = $event; schemaVersion++"
+                @update:uischema="liveUischema = $event as unknown as UISchemaElement; schemaVersion++"
                 @copy="onCopy"
               />
             </div>
@@ -218,7 +218,7 @@
             :schema="liveSchema"
             :uischema="liveUischema"
             @update:schema="liveSchema = $event; schemaVersion++"
-            @update:uischema="liveUischema = $event; schemaVersion++"
+            @update:uischema="liveUischema = $event as unknown as UISchemaElement; schemaVersion++"
             @copy="onCopy"
           />
         </div>
@@ -241,6 +241,7 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useColorMode, useRoute } from '#imports'
 import { examples } from '@/data/examples'
+import type { UISchemaElement } from '@jsonforms/core'
 import SidebarNavigation from '@/components/showcase/SidebarNavigation.vue'
 import PlaygroundPanel from '@/components/showcase/PlaygroundPanel.vue'
 import ThemePicker from '@/components/showcase/ThemePicker.vue'
@@ -265,7 +266,7 @@ const selectedExampleId = ref(route.params.example as string || examples[0]?.id 
 const initialEx = examples.find(e => e.id === selectedExampleId.value)
 const formData = ref<unknown>(initialEx ? structuredClone(initialEx.data) : null)
 const liveSchema = ref<unknown>(initialEx ? structuredClone(initialEx.schema) : null)
-const liveUischema = ref<unknown>(initialEx ? structuredClone(initialEx.uischema) : null)
+const liveUischema = ref<UISchemaElement | null>(initialEx ? structuredClone(initialEx.uischema) as unknown as UISchemaElement : null)
 const isMobile = ref(false)
 const schemaVersion = ref(0)
 
@@ -293,7 +294,7 @@ const setFormData = (exampleId: string) => {
   const ex = examples.find(e => e.id === exampleId)
   formData.value = ex ? structuredClone(ex.data) : null
   liveSchema.value = ex ? structuredClone(ex.schema) : null
-  liveUischema.value = ex ? structuredClone(ex.uischema) : null
+  liveUischema.value = ex ? structuredClone(ex.uischema) as unknown as UISchemaElement : null
 }
 
 // Resizable splitter

@@ -32,11 +32,9 @@ const inputId = computed(() => `textarea-${control.value.path.replace(/[^a-zA-Z0
       :readonly="control.readonly"
       class="w-full"
       :rows="4"
-      placeholder="Detaylı bilgi girin..."
+      placeholder="Enter detailed information..."
       :ui="{
-        root: 'relative',
-        base: 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-sm transition-all duration-200 resize-y min-h-[100px] focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500',
-        wrapper: 'relative'
+        base: 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-sm transition-all duration-200 resize-y min-h-[100px] focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500'
       }"
       @update:model-value="inputValue = $event"
     />

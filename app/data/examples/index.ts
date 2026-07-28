@@ -93,7 +93,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Single-line text input with validation',
     category: 'Basic Controls',
     icon: 'i-heroicons-pencil',
-    schema: { type: 'object', properties: { name: { type: 'string', title: 'Ad Soyad', minLength: 2, maxLength: 100 }, email: { type: 'string', title: 'E-posta', format: 'email' }, website: { type: 'string', title: 'Web Sitesi', format: 'uri' }, notes: { type: 'string', title: 'Notlar' } }, required: ['name', 'email'] },
+    schema: { type: 'object', properties: { name: { type: 'string', title: 'Full Name', minLength: 2, maxLength: 100 }, email: { type: 'string', title: 'Email', format: 'email' }, website: { type: 'string', title: 'Website', format: 'uri' }, notes: { type: 'string', title: 'Notes' } }, required: ['name', 'email'] },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/name' }, { type: 'Control', scope: '#/properties/email' }, { type: 'Control', scope: '#/properties/website' }, { type: 'Control', scope: '#/properties/notes' }] },
     data: { name: '', email: '', website: '', notes: '' }
   },
@@ -103,7 +103,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Multi-line text with character limit',
     category: 'Basic Controls',
     icon: 'i-heroicons-document-text',
-    schema: { type: 'object', properties: { bio: { type: 'string', title: 'Hakkımda', maxLength: 500 }, address: { type: 'string', title: 'Adres', maxLength: 1000 } } },
+    schema: { type: 'object', properties: { bio: { type: 'string', title: 'About Me', maxLength: 500 }, address: { type: 'string', title: 'Address', maxLength: 1000 } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/bio', options: { multi: true, rows: 4 } }, { type: 'Control', scope: '#/properties/address', options: { multi: true, rows: 3 } }] },
     data: { bio: '', address: '' }
   },
@@ -143,7 +143,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Integer input with min/max/step',
     category: 'Basic Controls',
     icon: 'i-heroicons-hashtag',
-    schema: { type: 'object', properties: { age: { type: 'integer', title: 'Yaş', minimum: 0, maximum: 150 }, quantity: { type: 'integer', title: 'Adet', minimum: 1, maximum: 9999 }, year: { type: 'integer', title: 'Yıl', minimum: 1900, maximum: 2100 } } },
+    schema: { type: 'object', properties: { age: { type: 'integer', title: 'Age', minimum: 0, maximum: 150 }, quantity: { type: 'integer', title: 'Quantity', minimum: 1, maximum: 9999 }, year: { type: 'integer', title: 'Year', minimum: 1900, maximum: 2100 } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/age' }, { type: 'Control', scope: '#/properties/quantity' }, { type: 'Control', scope: '#/properties/year' }] },
     data: { age: 25, quantity: 1, year: 2024 }
   },
@@ -153,7 +153,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Decimal number with precision',
     category: 'Basic Controls',
     icon: 'i-heroicons-scale',
-    schema: { type: 'object', properties: { price: { type: 'number', title: 'Fiyat', minimum: 0, maximum: 999999, multipleOf: 0.01 }, rating: { type: 'number', title: 'Puan', minimum: 0, maximum: 10, multipleOf: 0.1 }, tax: { type: 'number', title: 'Vergi Oranı (%)', minimum: 0, maximum: 100, multipleOf: 0.01 } } },
+    schema: { type: 'object', properties: { price: { type: 'number', title: 'Price', minimum: 0, maximum: 999999, multipleOf: 0.01 }, rating: { type: 'number', title: 'Rating', minimum: 0, maximum: 10, multipleOf: 0.1 }, tax: { type: 'number', title: 'Tax Rate (%)', minimum: 0, maximum: 100, multipleOf: 0.01 } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/price' }, { type: 'Control', scope: '#/properties/rating' }, { type: 'Control', scope: '#/properties/tax' }] },
     data: { price: 49.99, rating: 7.5, tax: 18.0 }
   },
@@ -163,7 +163,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Toggle switch for yes/no choices',
     category: 'Basic Controls',
     icon: 'i-heroicons-adjustments-horizontal',
-    schema: { type: 'object', properties: { newsletter: { type: 'boolean', title: 'Newsletter', default: false }, notifications: { type: 'boolean', title: 'Bildirimler', default: true }, darkMode: { type: 'boolean', title: 'Karanlık Mod', default: false } } },
+    schema: { type: 'object', properties: { newsletter: { type: 'boolean', title: 'Newsletter', default: false }, notifications: { type: 'boolean', title: 'Notifications', default: true }, darkMode: { type: 'boolean', title: 'Dark Mode', default: false } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/newsletter' }, { type: 'Control', scope: '#/properties/notifications' }, { type: 'Control', scope: '#/properties/darkMode' }] },
     data: { newsletter: false, notifications: true, darkMode: false }
   },
@@ -173,7 +173,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Checkbox for terms and agreements',
     category: 'Basic Controls',
     icon: 'i-heroicons-check-circle',
-    schema: { type: 'object', properties: { terms: { type: 'boolean', title: 'Kullanım Şartlarını Kabul Ediyorum', default: false }, kvkk: { type: 'boolean', title: 'KVKK Onayı', default: false }, marketing: { type: 'boolean', title: 'Pazarlama İzinleri', default: false } } },
+    schema: { type: 'object', properties: { terms: { type: 'boolean', title: 'I Accept the Terms of Use', default: false }, kvkk: { type: 'boolean', title: 'GDPR Consent', default: false }, marketing: { type: 'boolean', title: 'Marketing Permissions', default: false } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/terms', options: { format: 'checkbox' } }, { type: 'Control', scope: '#/properties/kvkk', options: { format: 'checkbox' } }, { type: 'Control', scope: '#/properties/marketing', options: { format: 'checkbox' } }] },
     data: { terms: false, kvkk: false, marketing: false }
   },
@@ -183,7 +183,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Date picker with min/max constraints',
     category: 'Basic Controls',
     icon: 'i-heroicons-calendar-days',
-    schema: { type: 'object', properties: { birthDate: { type: 'string', title: 'Doğum Tarihi', format: 'date' }, startDate: { type: 'string', title: 'Başlangıç', format: 'date' }, endDate: { type: 'string', title: 'Bitiş', format: 'date' } } },
+    schema: { type: 'object', properties: { birthDate: { type: 'string', title: 'Birth Date', format: 'date' }, startDate: { type: 'string', title: 'Start Date', format: 'date' }, endDate: { type: 'string', title: 'End Date', format: 'date' } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/birthDate' }, { type: 'Control', scope: '#/properties/startDate' }, { type: 'Control', scope: '#/properties/endDate' }] },
     data: { birthDate: '', startDate: '', endDate: '' }
   },
@@ -193,7 +193,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Time picker for hours and minutes',
     category: 'Basic Controls',
     icon: 'i-heroicons-clock',
-    schema: { type: 'object', properties: { alarm: { type: 'string', title: 'Alarm Saati', format: 'time' }, start: { type: 'string', title: 'Çalışma Başlangıcı', format: 'time' }, end: { type: 'string', title: 'Çalışma Bitişi', format: 'time' } } },
+    schema: { type: 'object', properties: { alarm: { type: 'string', title: 'Alarm Time', format: 'time' }, start: { type: 'string', title: 'Work Start', format: 'time' }, end: { type: 'string', title: 'Work End', format: 'time' } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/alarm' }, { type: 'Control', scope: '#/properties/start' }, { type: 'Control', scope: '#/properties/end' }] },
     data: { alarm: '07:00', start: '09:00', end: '18:00' }
   },
@@ -203,7 +203,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Combined date and time picker',
     category: 'Basic Controls',
     icon: 'i-heroicons-clock',
-    schema: { type: 'object', properties: { appointment: { type: 'string', title: 'Randevu', format: 'date-time' }, meeting: { type: 'string', title: 'Toplantı', format: 'date-time' }, reminder: { type: 'string', title: 'Hatırlatma', format: 'date-time' } } },
+    schema: { type: 'object', properties: { appointment: { type: 'string', title: 'Appointment', format: 'date-time' }, meeting: { type: 'string', title: 'Meeting', format: 'date-time' }, reminder: { type: 'string', title: 'Reminder', format: 'date-time' } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/appointment' }, { type: 'Control', scope: '#/properties/meeting' }, { type: 'Control', scope: '#/properties/reminder' }] },
     data: { appointment: '', meeting: '', reminder: '' }
   },
@@ -233,9 +233,9 @@ const examplesData: ShowcaseExample[] = [
     description: 'All fields in read-only mode',
     category: 'Basic Controls',
     icon: 'i-heroicons-eye-slash',
-    schema: { type: 'object', properties: { name: { type: 'string', title: 'Ad Soyad' }, email: { type: 'string', title: 'E-posta', format: 'email' }, role: { type: 'string', title: 'Rol', enum: ['Admin', 'User', 'Viewer'] }, createdAt: { type: 'string', title: 'Oluşturulma', format: 'date' }, active: { type: 'boolean', title: 'Aktif' } } },
+    schema: { type: 'object', properties: { name: { type: 'string', title: 'Full Name' }, email: { type: 'string', title: 'Email', format: 'email' }, role: { type: 'string', title: 'Role', enum: ['Admin', 'User', 'Viewer'] }, createdAt: { type: 'string', title: 'Created', format: 'date' }, active: { type: 'boolean', title: 'Active' } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/name' }, { type: 'Control', scope: '#/properties/email' }, { type: 'Control', scope: '#/properties/role' }, { type: 'Control', scope: '#/properties/createdAt' }, { type: 'Control', scope: '#/properties/active' }] },
-    data: { name: 'Ahmet Yılmaz', email: 'ahmet@ornek.com', role: 'Admin', createdAt: '2024-01-15', active: true }
+    data: { name: 'John Doe', email: 'john@example.com', role: 'Admin', createdAt: '2024-01-15', active: true }
   },
   {
     id: 'custom-renderer',
@@ -255,9 +255,9 @@ const examplesData: ShowcaseExample[] = [
     description: 'Single selection from predefined options',
     category: 'Enums & Selection',
     icon: 'i-heroicons-chevron-down',
-    schema: { type: 'object', properties: { country: { type: 'string', title: 'Ülke', enum: ['Türkiye', 'ABD', 'Almanya', 'Fransa', 'İngiltere', 'Japonya', 'Çin', 'Brezilya', 'Hindistan', 'Kanada'] }, city: { type: 'string', title: 'Şehir', enum: ['İstanbul', 'Ankara', 'İzmir', 'Bursa', 'Antalya', 'Adana', 'Trabzon', 'Eskişehir'] }, timezone: { type: 'string', title: 'Zaman Dilimi', enum: ['UTC-5', 'UTC', 'UTC+3', 'UTC+8'] } } },
+    schema: { type: 'object', properties: { country: { type: 'string', title: 'Country', enum: ['Turkey', 'USA', 'Germany', 'France', 'United Kingdom', 'Japan', 'China', 'Brazil', 'India', 'Canada'] }, city: { type: 'string', title: 'City', enum: ['Istanbul', 'Ankara', 'Izmir', 'Bursa', 'Antalya', 'Adana', 'Trabzon', 'Eskisehir'] }, timezone: { type: 'string', title: 'Timezone', enum: ['UTC-5', 'UTC', 'UTC+3', 'UTC+8'] } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/country' }, { type: 'Control', scope: '#/properties/city' }] }, { type: 'Control', scope: '#/properties/timezone' }] },
-    data: { country: 'Türkiye', city: 'İstanbul', timezone: 'UTC+3' }
+    data: { country: 'Turkey', city: 'Istanbul', timezone: 'UTC+3' }
   },
   {
     id: 'enum-in-array',
@@ -275,9 +275,9 @@ const examplesData: ShowcaseExample[] = [
     description: 'Multi-select with tags / chips',
     category: 'Enums & Selection',
     icon: 'i-heroicons-tag',
-    schema: { type: 'object', properties: { skills: { type: 'array', title: 'Yetenekler', items: { type: 'string', enum: ['Vue.js', 'React', 'Angular', 'TypeScript', 'Node.js', 'Python', 'Go', 'Rust', 'Docker', 'Kubernetes', 'AWS', 'PostgreSQL'] }, uniqueItems: true }, interests: { type: 'array', title: 'İlgi Alanları', items: { type: 'string', enum: ['Teknoloji', 'Spor', 'Müzik', 'Sinema', 'Seyahat', 'Yemek', 'Sanat', 'Bilim'] }, uniqueItems: true } } },
+    schema: { type: 'object', properties: { skills: { type: 'array', title: 'Skills', items: { type: 'string', enum: ['Vue.js', 'React', 'Angular', 'TypeScript', 'Node.js', 'Python', 'Go', 'Rust', 'Docker', 'Kubernetes', 'AWS', 'PostgreSQL'] }, uniqueItems: true }, interests: { type: 'array', title: 'Interests', items: { type: 'string', enum: ['Technology', 'Sports', 'Music', 'Cinema', 'Travel', 'Food', 'Art', 'Science'] }, uniqueItems: true } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/skills', options: { format: 'select-multiple' } }, { type: 'Control', scope: '#/properties/interests', options: { format: 'checkbox-group' } }] },
-    data: { skills: ['Vue.js', 'TypeScript'], interests: ['Teknoloji'] }
+    data: { skills: ['Vue.js', 'TypeScript'], interests: ['Technology'] }
   },
   {
     id: 'enum-multi-selection',
@@ -317,7 +317,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Range slider with min/max/step',
     category: 'Complex Controls',
     icon: 'i-heroicons-adjustments-horizontal',
-    schema: { type: 'object', properties: { volume: { type: 'integer', title: 'Ses', minimum: 0, maximum: 100 }, brightness: { type: 'integer', title: 'Parlaklık', minimum: 0, maximum: 100, multipleOf: 5 }, contrast: { type: 'number', title: 'Kontrast', minimum: 0, maximum: 2, multipleOf: 0.1 } } },
+    schema: { type: 'object', properties: { volume: { type: 'integer', title: 'Volume', minimum: 0, maximum: 100 }, brightness: { type: 'integer', title: 'Brightness', minimum: 0, maximum: 100, multipleOf: 5 }, contrast: { type: 'number', title: 'Contrast', minimum: 0, maximum: 2, multipleOf: 0.1 } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/volume', options: { format: 'slider' } }, { type: 'Control', scope: '#/properties/brightness', options: { format: 'slider' } }, { type: 'Control', scope: '#/properties/contrast', options: { format: 'slider' } }] },
     data: { volume: 75, brightness: 50, contrast: 1 }
   },
@@ -327,7 +327,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Star rating with half-point support',
     category: 'Complex Controls',
     icon: 'i-heroicons-star',
-    schema: { type: 'object', properties: { satisfaction: { type: 'number', title: 'Memnuniyet', minimum: 1, maximum: 5 }, quality: { type: 'number', title: 'Kalite', minimum: 0, maximum: 10, multipleOf: 0.5 }, design: { type: 'number', title: 'Tasarım', minimum: 1, maximum: 5 } } },
+    schema: { type: 'object', properties: { satisfaction: { type: 'number', title: 'Satisfaction', minimum: 1, maximum: 5 }, quality: { type: 'number', title: 'Quality', minimum: 0, maximum: 10, multipleOf: 0.5 }, design: { type: 'number', title: 'Design', minimum: 1, maximum: 5 } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/satisfaction', options: { format: 'rating' } }, { type: 'Control', scope: '#/properties/quality', options: { format: 'rating' } }, { type: 'Control', scope: '#/properties/design', options: { format: 'rating' } }] },
     data: { satisfaction: 4, quality: 7.5, design: 5 }
   },
@@ -337,7 +337,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Color selection with HEX preview',
     category: 'Complex Controls',
     icon: 'i-heroicons-swatch',
-    schema: { type: 'object', properties: { primary: { type: 'string', title: 'Birincil Renk' }, secondary: { type: 'string', title: 'İkincil Renk' }, accent: { type: 'string', title: 'Vurgu Rengi' } } },
+    schema: { type: 'object', properties: { primary: { type: 'string', title: 'Primary Color' }, secondary: { type: 'string', title: 'Secondary Color' }, accent: { type: 'string', title: 'Accent Color' } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/primary', options: { format: 'color' } }, { type: 'Control', scope: '#/properties/secondary', options: { format: 'color' } }, { type: 'Control', scope: '#/properties/accent', options: { format: 'color' } }] },
     data: { primary: '#3B82F6', secondary: '#8B5CF6', accent: '#F59E0B' }
   },
@@ -349,7 +349,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Stacked form fields in vertical arrangement',
     category: 'Layouts',
     icon: 'i-heroicons-bars-3',
-    schema: { type: 'object', properties: { field1: { type: 'string', title: 'Alan 1' }, field2: { type: 'string', title: 'Alan 2' }, field3: { type: 'string', title: 'Alan 3' }, field4: { type: 'string', title: 'Alan 4' } } },
+    schema: { type: 'object', properties: { field1: { type: 'string', title: 'Field 1' }, field2: { type: 'string', title: 'Field 2' }, field3: { type: 'string', title: 'Field 3' }, field4: { type: 'string', title: 'Field 4' } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/field1' }, { type: 'Control', scope: '#/properties/field2' }, { type: 'Control', scope: '#/properties/field3' }, { type: 'Control', scope: '#/properties/field4' }] },
     data: { field1: '', field2: '', field3: '', field4: '' }
   },
@@ -359,7 +359,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Side-by-side fields in a row',
     category: 'Layouts',
     icon: 'i-heroicons-bars-4',
-    schema: { type: 'object', properties: { first: { type: 'string', title: 'Ad' }, last: { type: 'string', title: 'Soyad' }, email: { type: 'string', title: 'E-posta', format: 'email' }, phone: { type: 'string', title: 'Telefon' } } },
+    schema: { type: 'object', properties: { first: { type: 'string', title: 'First Name' }, last: { type: 'string', title: 'Last Name' }, email: { type: 'string', title: 'Email', format: 'email' }, phone: { type: 'string', title: 'Phone' } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/first' }, { type: 'Control', scope: '#/properties/last' }] }, { type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/email' }, { type: 'Control', scope: '#/properties/phone' }] }] },
     data: { first: '', last: '', email: '', phone: '' }
   },
@@ -369,8 +369,8 @@ const examplesData: ShowcaseExample[] = [
     description: 'Grouped fields with section labels',
     category: 'Layouts',
     icon: 'i-heroicons-rectangle-group',
-    schema: { type: 'object', properties: { company: { type: 'string', title: 'Şirket' }, position: { type: 'string', title: 'Pozisyon' }, city: { type: 'string', title: 'Şehir' }, country: { type: 'string', title: 'Ülke' } } },
-    uischema: { type: 'VerticalLayout', elements: [{ type: 'GroupLayout', label: 'İş Bilgileri', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/company' }, { type: 'Control', scope: '#/properties/position' }] }] }, { type: 'GroupLayout', label: 'Adres', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/city' }, { type: 'Control', scope: '#/properties/country' }] }] }] },
+    schema: { type: 'object', properties: { company: { type: 'string', title: 'Company' }, position: { type: 'string', title: 'Position' }, city: { type: 'string', title: 'City' }, country: { type: 'string', title: 'Country' } } },
+    uischema: { type: 'VerticalLayout', elements: [{ type: 'GroupLayout', label: 'Job Information', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/company' }, { type: 'Control', scope: '#/properties/position' }] }] }, { type: 'GroupLayout', label: 'Address', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/city' }, { type: 'Control', scope: '#/properties/country' }] }] }] },
     data: { company: '', position: '', city: '', country: '' }
   },
   {
@@ -389,8 +389,8 @@ const examplesData: ShowcaseExample[] = [
     description: 'Categorized form with tab navigation',
     category: 'Layouts',
     icon: 'i-heroicons-squares-2x2',
-    schema: { type: 'object', properties: { personal: { type: 'string', title: 'Ad Soyad' }, email: { type: 'string', title: 'E-posta', format: 'email' }, phone: { type: 'string', title: 'Telefon' }, address: { type: 'string', title: 'Adres' }, city: { type: 'string', title: 'Şehir' }, postalCode: { type: 'string', title: 'Posta Kodu' }, company: { type: 'string', title: 'Şirket' }, position: { type: 'string', title: 'Pozisyon' } } },
-    uischema: { type: 'Categorization', elements: [{ type: 'Category', label: 'Kişisel', elements: [{ type: 'GroupLayout', label: 'Temel Bilgiler', elements: [{ type: 'Control', scope: '#/properties/personal' }, { type: 'Control', scope: '#/properties/email' }, { type: 'Control', scope: '#/properties/phone' }] }] }, { type: 'Category', label: 'Adres', elements: [{ type: 'GroupLayout', label: 'İletişim Adresi', elements: [{ type: 'Control', scope: '#/properties/address' }, { type: 'Control', scope: '#/properties/city' }, { type: 'Control', scope: '#/properties/postalCode' }] }] }, { type: 'Category', label: 'İş', elements: [{ type: 'GroupLayout', label: 'İş Bilgileri', elements: [{ type: 'Control', scope: '#/properties/company' }, { type: 'Control', scope: '#/properties/position' }] }] }] },
+    schema: { type: 'object', properties: { personal: { type: 'string', title: 'Full Name' }, email: { type: 'string', title: 'Email', format: 'email' }, phone: { type: 'string', title: 'Phone' }, address: { type: 'string', title: 'Address' }, city: { type: 'string', title: 'City' }, postalCode: { type: 'string', title: 'Postal Code' }, company: { type: 'string', title: 'Company' }, position: { type: 'string', title: 'Position' } } },
+    uischema: { type: 'Categorization', elements: [{ type: 'Category', label: 'Personal', elements: [{ type: 'GroupLayout', label: 'Basic Information', elements: [{ type: 'Control', scope: '#/properties/personal' }, { type: 'Control', scope: '#/properties/email' }, { type: 'Control', scope: '#/properties/phone' }] }] }, { type: 'Category', label: 'Address', elements: [{ type: 'GroupLayout', label: 'Contact Address', elements: [{ type: 'Control', scope: '#/properties/address' }, { type: 'Control', scope: '#/properties/city' }, { type: 'Control', scope: '#/properties/postalCode' }] }] }, { type: 'Category', label: 'Job/Work', elements: [{ type: 'GroupLayout', label: 'Job Information', elements: [{ type: 'Control', scope: '#/properties/company' }, { type: 'Control', scope: '#/properties/position' }] }] }] },
     data: { personal: '', email: '', phone: '', address: '', city: '', postalCode: '', company: '', position: '' }
   },
   {
@@ -399,8 +399,8 @@ const examplesData: ShowcaseExample[] = [
     description: 'Step-by-step form wizard with progress',
     category: 'Layouts',
     icon: 'i-heroicons-arrow-path-rounded-square',
-    schema: { type: 'object', properties: { firstName: { type: 'string', title: 'Ad', minLength: 2 }, lastName: { type: 'string', title: 'Soyad', minLength: 2 }, email: { type: 'string', title: 'E-posta', format: 'email' }, address: { type: 'string', title: 'Adres' }, city: { type: 'string', title: 'Şehir' }, company: { type: 'string', title: 'Şirket' }, position: { type: 'string', title: 'Pozisyon' }, experience: { type: 'integer', title: 'Deneyim (yıl)', minimum: 0 }, terms: { type: 'boolean', title: 'Şartları Kabul Ediyorum' } }, required: ['firstName', 'lastName', 'email', 'terms'] },
-    uischema: { type: 'Categorization', elements: [{ type: 'Category', label: 'Kişisel', elements: [{ type: 'GroupLayout', label: 'Temel Bilgiler', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/firstName' }, { type: 'Control', scope: '#/properties/lastName' }] }, { type: 'Control', scope: '#/properties/email' }] }] }, { type: 'Category', label: 'Adres', elements: [{ type: 'GroupLayout', label: 'Adres Bilgileri', elements: [{ type: 'Control', scope: '#/properties/address' }, { type: 'Control', scope: '#/properties/city' }] }] }, { type: 'Category', label: 'İş', elements: [{ type: 'GroupLayout', label: 'İş Bilgileri', elements: [{ type: 'Control', scope: '#/properties/company' }, { type: 'Control', scope: '#/properties/position' }, { type: 'Control', scope: '#/properties/experience' }] }] }, { type: 'Category', label: 'Onay', elements: [{ type: 'GroupLayout', label: 'Son Onay', elements: [{ type: 'Control', scope: '#/properties/terms', options: { format: 'checkbox' } }] }] }] },
+    schema: { type: 'object', properties: { firstName: { type: 'string', title: 'First Name', minLength: 2 }, lastName: { type: 'string', title: 'Last Name', minLength: 2 }, email: { type: 'string', title: 'Email', format: 'email' }, address: { type: 'string', title: 'Address' }, city: { type: 'string', title: 'City' }, company: { type: 'string', title: 'Company' }, position: { type: 'string', title: 'Position' }, experience: { type: 'integer', title: 'Experience (years)', minimum: 0 }, terms: { type: 'boolean', title: 'I Accept the Terms' } }, required: ['firstName', 'lastName', 'email', 'terms'] },
+    uischema: { type: 'Categorization', elements: [{ type: 'Category', label: 'Personal', elements: [{ type: 'GroupLayout', label: 'Basic Information', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/firstName' }, { type: 'Control', scope: '#/properties/lastName' }] }, { type: 'Control', scope: '#/properties/email' }] }] }, { type: 'Category', label: 'Address', elements: [{ type: 'GroupLayout', label: 'Address Information', elements: [{ type: 'Control', scope: '#/properties/address' }, { type: 'Control', scope: '#/properties/city' }] }] }, { type: 'Category', label: 'Job/Work', elements: [{ type: 'GroupLayout', label: 'Job Information', elements: [{ type: 'Control', scope: '#/properties/company' }, { type: 'Control', scope: '#/properties/position' }, { type: 'Control', scope: '#/properties/experience' }] }] }, { type: 'Category', label: 'Approval', elements: [{ type: 'GroupLayout', label: 'Final Approval', elements: [{ type: 'Control', scope: '#/properties/terms', options: { format: 'checkbox' } }] }] }] },
     data: { firstName: '', lastName: '', email: '', address: '', city: '', company: '', position: '', experience: 0, terms: false }
   },
   {
@@ -431,7 +431,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Select one of several contact methods',
     category: 'Combinators & Rules',
     icon: 'i-heroicons-arrow-path',
-    schema: { type: 'object', properties: { contactType: { title: 'İletişim Yöntemi', oneOf: [{ type: 'object', title: 'E-posta', properties: { method: { type: 'string', const: 'email' }, emailAddress: { type: 'string', title: 'E-posta Adresi', format: 'email' }, subject: { type: 'string', title: 'Konu' } }, required: ['method', 'emailAddress'] }, { type: 'object', title: 'Telefon', properties: { method: { type: 'string', const: 'phone' }, phoneNumber: { type: 'string', title: 'Telefon Numarası' }, availableHours: { type: 'string', title: 'Uygun Saatler' } }, required: ['method', 'phoneNumber'] }, { type: 'object', title: 'Adres', properties: { method: { type: 'string', const: 'mail' }, fullAddress: { type: 'string', title: 'Açık Adres' }, city: { type: 'string', title: 'Şehir' }, zipCode: { type: 'string', title: 'Posta Kodu' } }, required: ['method', 'fullAddress'] }] } } },
+    schema: { type: 'object', properties: { contactType: { title: 'Contact Method', oneOf: [{ type: 'object', title: 'Email', properties: { method: { type: 'string', const: 'email' }, emailAddress: { type: 'string', title: 'Email Address', format: 'email' }, subject: { type: 'string', title: 'Subject' } }, required: ['method', 'emailAddress'] }, { type: 'object', title: 'Phone', properties: { method: { type: 'string', const: 'phone' }, phoneNumber: { type: 'string', title: 'Phone Number' }, availableHours: { type: 'string', title: 'Available Hours' } }, required: ['method', 'phoneNumber'] }, { type: 'object', title: 'Address', properties: { method: { type: 'string', const: 'mail' }, fullAddress: { type: 'string', title: 'Full Address' }, city: { type: 'string', title: 'City' }, zipCode: { type: 'string', title: 'Postal Code' } }, required: ['method', 'fullAddress'] }] } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/contactType' }] },
     data: { contactType: { method: 'email', emailAddress: '', subject: '' } }
   },
@@ -441,7 +441,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Choose between payment method variants',
     category: 'Combinators & Rules',
     icon: 'i-heroicons-credit-card',
-    schema: { type: 'object', properties: { payment: { title: 'Ödeme Yöntemi', oneOf: [{ type: 'object', title: 'Kredi Kartı', properties: { type: { type: 'string', const: 'card' }, cardNumber: { type: 'string', title: 'Kart Numarası', pattern: '^[0-9]{16}$' }, expiryDate: { type: 'string', title: 'Son Kullanma', format: 'date' }, cvv: { type: 'string', title: 'CVV', pattern: '^[0-9]{3}$' } }, required: ['type', 'cardNumber', 'expiryDate', 'cvv'] }, { type: 'object', title: 'Banka Havalesi', properties: { type: { type: 'string', const: 'transfer' }, bankName: { type: 'string', title: 'Banka Adı' }, accountNumber: { type: 'string', title: 'Hesap Numarası' }, iban: { type: 'string', title: 'IBAN' } }, required: ['type', 'bankName', 'accountNumber'] }, { type: 'object', title: 'Dijital Cüzdan', properties: { type: { type: 'string', const: 'wallet' }, walletProvider: { type: 'string', title: 'Cüzdan Sağlayıcı', enum: ['PayPal', 'Apple Pay', 'Google Pay', 'Venmo'] }, walletEmail: { type: 'string', title: 'Cüzdan E-postası', format: 'email' } }, required: ['type', 'walletProvider', 'walletEmail'] }] } } },
+    schema: { type: 'object', properties: { payment: { title: 'Payment Method', oneOf: [{ type: 'object', title: 'Credit Card', properties: { type: { type: 'string', const: 'card' }, cardNumber: { type: 'string', title: 'Card Number', pattern: '^[0-9]{16}$' }, expiryDate: { type: 'string', title: 'Expiry Date', format: 'date' }, cvv: { type: 'string', title: 'CVV', pattern: '^[0-9]{3}$' } }, required: ['type', 'cardNumber', 'expiryDate', 'cvv'] }, { type: 'object', title: 'Bank Transfer', properties: { type: { type: 'string', const: 'transfer' }, bankName: { type: 'string', title: 'Bank Name' }, accountNumber: { type: 'string', title: 'Account Number' }, iban: { type: 'string', title: 'IBAN' } }, required: ['type', 'bankName', 'accountNumber'] }, { type: 'object', title: 'Digital Wallet', properties: { type: { type: 'string', const: 'wallet' }, walletProvider: { type: 'string', title: 'Wallet Provider', enum: ['PayPal', 'Apple Pay', 'Google Pay', 'Venmo'] }, walletEmail: { type: 'string', title: 'Wallet Email', format: 'email' } }, required: ['type', 'walletProvider', 'walletEmail'] }] } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/payment' }] },
     data: { payment: { type: 'card', cardNumber: '', expiryDate: '', cvv: '' } }
   },
@@ -481,7 +481,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Field that accepts multiple types',
     category: 'Combinators & Rules',
     icon: 'i-heroicons-variable',
-    schema: { type: 'object', properties: { identifier: { title: 'Kimlik', anyOf: [{ type: 'string', title: 'Kullanıcı Adı', minLength: 3 }, { type: 'integer', title: 'Kullanıcı ID', minimum: 1 }] } } },
+    schema: { type: 'object', properties: { identifier: { title: 'Identifier', anyOf: [{ type: 'string', title: 'Username', minLength: 3 }, { type: 'integer', title: 'User ID', minimum: 1 }] } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/identifier' }] },
     data: { identifier: '' }
   },
@@ -511,7 +511,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Schema composition from multiple parts',
     category: 'Combinators & Rules',
     icon: 'i-heroicons-variable',
-    schema: { type: 'object', title: 'Kişi', allOf: [{ type: 'object', properties: { name: { type: 'string', title: 'Ad' }, age: { type: 'integer', title: 'Yaş', minimum: 0 } } }, { type: 'object', properties: { email: { type: 'string', title: 'E-posta', format: 'email' } } }], required: ['name', 'email'] },
+    schema: { type: 'object', title: 'Person', allOf: [{ type: 'object', properties: { name: { type: 'string', title: 'First Name' }, age: { type: 'integer', title: 'Age', minimum: 0 } } }, { type: 'object', properties: { email: { type: 'string', title: 'Email', format: 'email' } } }], required: ['name', 'email'] },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/name' }, { type: 'Control', scope: '#/properties/age' }, { type: 'Control', scope: '#/properties/email' }] },
     data: { name: '', age: 0, email: '' }
   },
@@ -531,8 +531,8 @@ const examplesData: ShowcaseExample[] = [
     description: 'Conditional fields based on a toggle',
     category: 'Combinators & Rules',
     icon: 'i-heroicons-arrow-uturn-right',
-    schema: { type: 'object', properties: { hasVehicle: { type: 'boolean', title: 'Aracınız Var Mı?', default: false }, vehicleType: { type: 'string', title: 'Araç Tipi', enum: ['Otomobil', 'Motosiklet', 'Kamyonet', 'Diğer'] }, licensePlate: { type: 'string', title: 'Plaka' }, licenseYears: { type: 'integer', title: 'Ehliyet Yılı', minimum: 0 }, preferredTransport: { type: 'string', title: 'Tercih Edilen Ulaşım', enum: ['Toplu Taşıma', 'Bisiklet', 'Yürüyüş', 'Taksi'] } }, required: ['hasVehicle'] },
-    uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/hasVehicle' }, { type: 'GroupLayout', label: 'Araç Bilgileri', rule: { effect: 'SHOW', condition: { scope: '#/properties/hasVehicle', expectedValue: true } }, elements: [{ type: 'Control', scope: '#/properties/vehicleType' }, { type: 'Control', scope: '#/properties/licensePlate' }, { type: 'Control', scope: '#/properties/licenseYears' }] }, { type: 'GroupLayout', label: 'Ulaşım Tercihi', rule: { effect: 'SHOW', condition: { scope: '#/properties/hasVehicle', expectedValue: false } }, elements: [{ type: 'Control', scope: '#/properties/preferredTransport' }] }] },
+    schema: { type: 'object', properties: { hasVehicle: { type: 'boolean', title: 'Do You Have a Vehicle?', default: false }, vehicleType: { type: 'string', title: 'Vehicle Type', enum: ['Car', 'Motorcycle', 'Van', 'Other'] }, licensePlate: { type: 'string', title: 'License Plate' }, licenseYears: { type: 'integer', title: 'License Years', minimum: 0 }, preferredTransport: { type: 'string', title: 'Preferred Transport', enum: ['Public Transport', 'Bicycle', 'Walking', 'Taxi'] } }, required: ['hasVehicle'] },
+    uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/hasVehicle' }, { type: 'GroupLayout', label: 'Vehicle Information', rule: { effect: 'SHOW', condition: { scope: '#/properties/hasVehicle', expectedValue: true } }, elements: [{ type: 'Control', scope: '#/properties/vehicleType' }, { type: 'Control', scope: '#/properties/licensePlate' }, { type: 'Control', scope: '#/properties/licenseYears' }] }, { type: 'GroupLayout', label: 'Transport Preference', rule: { effect: 'SHOW', condition: { scope: '#/properties/hasVehicle', expectedValue: false } }, elements: [{ type: 'Control', scope: '#/properties/preferredTransport' }] }] },
     data: { hasVehicle: false, vehicleType: '', licensePlate: '', licenseYears: 0, preferredTransport: '' }
   },
   {
@@ -551,8 +551,8 @@ const examplesData: ShowcaseExample[] = [
     description: 'Fields that show/hide based on selections',
     category: 'Combinators & Rules',
     icon: 'i-heroicons-shield-exclamation',
-    schema: { type: 'object', properties: { employmentStatus: { type: 'string', title: 'Çalışma Durumu', enum: ['employed', 'self-employed', 'unemployed', 'retired', 'student'] }, employerName: { type: 'string', title: 'İşveren Adı' }, jobTitle: { type: 'string', title: 'Pozisyon' }, businessName: { type: 'string', title: 'İşletme Adı' }, businessType: { type: 'string', title: 'İşletme Türü', enum: ['Freelance', 'Şirket Sahibi', 'Esnaf'] }, lastJobTitle: { type: 'string', title: 'Son İş Pozisyonu' }, yearsSinceEmployment: { type: 'integer', title: 'İşten Ayrılalı (yıl)', minimum: 0 }, pensionYears: { type: 'integer', title: 'Emeklilik Yılı', minimum: 0 }, schoolName: { type: 'string', title: 'Okul Adı' }, grade: { type: 'string', title: 'Sınıf' } } },
-    uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/employmentStatus' }, { type: 'GroupLayout', label: 'Çalışan Bilgileri', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'employed' } }, elements: [{ type: 'Control', scope: '#/properties/employerName' }, { type: 'Control', scope: '#/properties/jobTitle' }] }, { type: 'GroupLayout', label: 'Serbest Çalışan Bilgileri', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'self-employed' } }, elements: [{ type: 'Control', scope: '#/properties/businessName' }, { type: 'Control', scope: '#/properties/businessType' }] }, { type: 'GroupLayout', label: 'İşsiz Bilgileri', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'unemployed' } }, elements: [{ type: 'Control', scope: '#/properties/lastJobTitle' }, { type: 'Control', scope: '#/properties/yearsSinceEmployment' }] }, { type: 'GroupLayout', label: 'Emekli Bilgileri', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'retired' } }, elements: [{ type: 'Control', scope: '#/properties/pensionYears' }] }, { type: 'GroupLayout', label: 'Öğrenci Bilgileri', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'student' } }, elements: [{ type: 'Control', scope: '#/properties/schoolName' }, { type: 'Control', scope: '#/properties/grade' }] }] },
+    schema: { type: 'object', properties: { employmentStatus: { type: 'string', title: 'Employment Status', enum: ['employed', 'self-employed', 'unemployed', 'retired', 'student'] }, employerName: { type: 'string', title: 'Employer Name' }, jobTitle: { type: 'string', title: 'Position' }, businessName: { type: 'string', title: 'Business Name' }, businessType: { type: 'string', title: 'Business Type', enum: ['Freelance', 'Business Owner', 'Tradesman'] }, lastJobTitle: { type: 'string', title: 'Last Job Position' }, yearsSinceEmployment: { type: 'integer', title: 'Years Since Employment', minimum: 0 }, pensionYears: { type: 'integer', title: 'Retirement Years', minimum: 0 }, schoolName: { type: 'string', title: 'School Name' }, grade: { type: 'string', title: 'Grade/Class' } } },
+    uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/employmentStatus' }, { type: 'GroupLayout', label: 'Employee Information', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'employed' } }, elements: [{ type: 'Control', scope: '#/properties/employerName' }, { type: 'Control', scope: '#/properties/jobTitle' }] }, { type: 'GroupLayout', label: 'Freelancer Information', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'self-employed' } }, elements: [{ type: 'Control', scope: '#/properties/businessName' }, { type: 'Control', scope: '#/properties/businessType' }] }, { type: 'GroupLayout', label: 'Unemployed Information', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'unemployed' } }, elements: [{ type: 'Control', scope: '#/properties/lastJobTitle' }, { type: 'Control', scope: '#/properties/yearsSinceEmployment' }] }, { type: 'GroupLayout', label: 'Retired Information', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'retired' } }, elements: [{ type: 'Control', scope: '#/properties/pensionYears' }] }, { type: 'GroupLayout', label: 'Student Information', rule: { effect: 'SHOW', condition: { scope: '#/properties/employmentStatus', expectedValue: 'student' } }, elements: [{ type: 'Control', scope: '#/properties/schoolName' }, { type: 'Control', scope: '#/properties/grade' }] }] },
     data: { employmentStatus: 'employed', employerName: '', jobTitle: '', businessName: '', businessType: '', lastJobTitle: '', yearsSinceEmployment: 0, pensionYears: 0, schoolName: '', grade: '' }
   },
   {
@@ -573,7 +573,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Array of primitive strings with add/remove',
     category: 'Arrays & Objects',
     icon: 'i-heroicons-list-bullet',
-    schema: { type: 'object', properties: { tags: { type: 'array', title: 'Etiketler', items: { type: 'string' }, maxItems: 10, uniqueItems: true }, phoneNumbers: { type: 'array', title: 'Telefonlar', items: { type: 'string', pattern: '^[0-9+\\s-]{10,}$' }, maxItems: 5 } } },
+    schema: { type: 'object', properties: { tags: { type: 'array', title: 'Tags', items: { type: 'string' }, maxItems: 10, uniqueItems: true }, phoneNumbers: { type: 'array', title: 'Phone Numbers', items: { type: 'string', pattern: '^[0-9+\\s-]{10,}$' }, maxItems: 5 } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/tags', options: { format: 'array-tags' } }, { type: 'Control', scope: '#/properties/phoneNumbers', options: { format: 'array-simple' } }] },
     data: { tags: ['vue', 'nuxt', 'typescript'], phoneNumbers: [] }
   },
@@ -583,7 +583,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Array of structured object items',
     category: 'Arrays & Objects',
     icon: 'i-heroicons-rectangle-group',
-    schema: { type: 'object', properties: { experiences: { type: 'array', title: 'İş Deneyimleri', items: { type: 'object', properties: { company: { type: 'string', title: 'Şirket' }, position: { type: 'string', title: 'Pozisyon' }, startDate: { type: 'string', title: 'Başlangıç', format: 'date' }, endDate: { type: 'string', title: 'Bitiş', format: 'date' }, current: { type: 'boolean', title: 'Devam Ediyor', default: false }, description: { type: 'string', title: 'Açıklama' } }, required: ['company', 'position', 'startDate'] } }, education: { type: 'array', title: 'Eğitim', items: { type: 'object', properties: { school: { type: 'string', title: 'Okul' }, degree: { type: 'string', title: 'Derece', enum: ['Lise', 'Önlisans', 'Lisans', 'Yüksek Lisans', 'Doktora'] }, field: { type: 'string', title: 'Bölüm' }, graduationYear: { type: 'integer', title: 'Mezuniyet Yılı', minimum: 1950, maximum: 2030 } }, required: ['school', 'degree', 'field'] } } } },
+    schema: { type: 'object', properties: { experiences: { type: 'array', title: 'Work Experience', items: { type: 'object', properties: { company: { type: 'string', title: 'Company' }, position: { type: 'string', title: 'Position' }, startDate: { type: 'string', title: 'Start Date', format: 'date' }, endDate: { type: 'string', title: 'End Date', format: 'date' }, current: { type: 'boolean', title: 'Currently Working', default: false }, description: { type: 'string', title: 'Description' } }, required: ['company', 'position', 'startDate'] } }, education: { type: 'array', title: 'Education', items: { type: 'object', properties: { school: { type: 'string', title: 'School' }, degree: { type: 'string', title: 'Degree', enum: ['High School', 'Associate Degree', 'Bachelor\'s', 'Master\'s', 'PhD'] }, field: { type: 'string', title: 'Department' }, graduationYear: { type: 'integer', title: 'Graduation Year', minimum: 1950, maximum: 2030 } }, required: ['school', 'degree', 'field'] } } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/experiences', options: { format: 'array-objects' } }, { type: 'Control', scope: '#/properties/education', options: { format: 'array-objects' } }] },
     data: { experiences: [{ company: '', position: '', startDate: '', endDate: '', current: false, description: '' }], education: [] }
   },
@@ -593,7 +593,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Array with nested object arrays',
     category: 'Arrays & Objects',
     icon: 'i-heroicons-table-cells',
-    schema: { type: 'object', properties: { projects: { type: 'array', title: 'Projeler', items: { type: 'object', properties: { projectName: { type: 'string', title: 'Proje Adı' }, role: { type: 'string', title: 'Rolüm' }, technologies: { type: 'array', title: 'Kullanılan Teknolojiler', items: { type: 'string' } }, teamMembers: { type: 'array', title: 'Takım Üyeleri', items: { type: 'object', properties: { name: { type: 'string', title: 'Ad' }, role: { type: 'string', title: 'Rol' } }, required: ['name', 'role'] } } }, required: ['projectName'] } } } },
+    schema: { type: 'object', properties: { projects: { type: 'array', title: 'Projects', items: { type: 'object', properties: { projectName: { type: 'string', title: 'Project Name' }, role: { type: 'string', title: 'My Role' }, technologies: { type: 'array', title: 'Technologies Used', items: { type: 'string' } }, teamMembers: { type: 'array', title: 'Team Members', items: { type: 'object', properties: { name: { type: 'string', title: 'First Name' }, role: { type: 'string', title: 'Role' } }, required: ['name', 'role'] } } }, required: ['projectName'] } } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/projects', options: { format: 'array-objects' } }] },
     data: { projects: [{ projectName: '', role: '', technologies: [], teamMembers: [] }] }
   },
@@ -633,9 +633,9 @@ const examplesData: ShowcaseExample[] = [
     description: 'Drag-and-drop reorderable list',
     category: 'Arrays & Objects',
     icon: 'i-heroicons-bars-arrow-up',
-    schema: { type: 'object', properties: { priorities: { type: 'array', title: 'Öncelik Sırası', items: { type: 'object', properties: { task: { type: 'string', title: 'Görev' }, priority: { type: 'integer', title: 'Öncelik', minimum: 1, maximum: 5 } }, required: ['task', 'priority'] } } } },
+    schema: { type: 'object', properties: { priorities: { type: 'array', title: 'Priority Order', items: { type: 'object', properties: { task: { type: 'string', title: 'Task' }, priority: { type: 'integer', title: 'Priority', minimum: 1, maximum: 5 } }, required: ['task', 'priority'] } } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/priorities', options: { format: 'array-objects', reorder: true } }] },
-    data: { priorities: [{ task: 'Projeyi başlat', priority: 1 }, { task: 'Gereksinimleri topla', priority: 2 }, { task: 'Tasarım yap', priority: 3 }] }
+    data: { priorities: [{ task: 'Start project', priority: 1 }, { task: 'Gather requirements', priority: 2 }, { task: 'Design', priority: 3 }] }
   },
   {
     id: 'array-enums',
@@ -723,8 +723,8 @@ const examplesData: ShowcaseExample[] = [
     description: 'Dynamic key-value data',
     category: 'Arrays & Objects',
     icon: 'i-heroicons-sparkles',
-    schema: { type: 'object', properties: { metadata: { type: 'object', title: 'Meta Veriler', additionalProperties: { type: 'string' } }, customFields: { type: 'object', title: 'Özel Alanlar', additionalProperties: { type: 'string' } } } },
-    uischema: { type: 'VerticalLayout', elements: [{ type: 'GroupLayout', label: 'Meta Veriler', elements: [{ type: 'Control', scope: '#/properties/metadata', options: { format: 'key-value' } }] }, { type: 'GroupLayout', label: 'Özel Alanlar', elements: [{ type: 'Control', scope: '#/properties/customFields', options: { format: 'key-value' } }] }] },
+    schema: { type: 'object', properties: { metadata: { type: 'object', title: 'Metadata', additionalProperties: { type: 'string' } }, customFields: { type: 'object', title: 'Custom Fields', additionalProperties: { type: 'string' } } } },
+    uischema: { type: 'VerticalLayout', elements: [{ type: 'GroupLayout', label: 'Metadata', elements: [{ type: 'Control', scope: '#/properties/metadata', options: { format: 'key-value' } }] }, { type: 'GroupLayout', label: 'Custom Fields', elements: [{ type: 'Control', scope: '#/properties/customFields', options: { format: 'key-value' } }] }] },
     data: { metadata: { author: 'John', version: '1.0' }, customFields: {} }
   },
   {
@@ -733,7 +733,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Schema with dynamic property generation',
     category: 'Arrays & Objects',
     icon: 'i-heroicons-cube-transparent',
-    schema: { type: 'object', properties: { dynamicData: { type: 'object', title: 'Dinamik Veri', additionalProperties: { type: 'string' }, default: {} } } },
+    schema: { type: 'object', properties: { dynamicData: { type: 'object', title: 'Dynamic Data', additionalProperties: { type: 'string' }, default: {} } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/dynamicData', options: { format: 'key-value' } }] },
     data: { dynamicData: { key1: 'value1', key2: 'value2' } }
   },
@@ -755,17 +755,17 @@ const examplesData: ShowcaseExample[] = [
     description: 'Fields with custom placeholder and formatting',
     category: 'JSON Forms Deep Dives',
     icon: 'i-heroicons-adjustments-vertical',
-    schema: { type: 'object', properties: { searchQuery: { type: 'string', title: 'Arama' }, minPrice: { type: 'number', title: 'Min. Fiyat', minimum: 0 }, maxPrice: { type: 'number', title: 'Max. Fiyat', minimum: 0 }, sortBy: { type: 'string', title: 'Sıralama', enum: ['Fiyat Artan', 'Fiyat Azalan', 'Ad (A-Z)', 'Ad (Z-A)', 'Tarih'] }, itemsPerPage: { type: 'integer', title: 'Sayfa Başına', minimum: 10, maximum: 100, multipleOf: 10 } } },
-    uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/searchQuery', options: { placeholder: 'Ürün, kategori veya marka ara...' } }, { type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/minPrice', options: { placeholder: '0 ₺' } }, { type: 'Control', scope: '#/properties/maxPrice', options: { placeholder: '∞' } }] }, { type: 'Control', scope: '#/properties/sortBy', options: { placeholder: 'Sıralama seçin...' } }, { type: 'Control', scope: '#/properties/itemsPerPage' }] },
-    data: { searchQuery: '', minPrice: 0, maxPrice: 0, sortBy: 'Fiyat Artan', itemsPerPage: 20 }
+    schema: { type: 'object', properties: { searchQuery: { type: 'string', title: 'Search' }, minPrice: { type: 'number', title: 'Min. Price', minimum: 0 }, maxPrice: { type: 'number', title: 'Max. Price', minimum: 0 }, sortBy: { type: 'string', title: 'Sort By', enum: ['Price Ascending', 'Price Descending', 'Name (A-Z)', 'Name (Z-A)', 'Date'] }, itemsPerPage: { type: 'integer', title: 'Per Page', minimum: 10, maximum: 100, multipleOf: 10 } } },
+    uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/searchQuery', options: { placeholder: 'Search product, category or brand...' } }, { type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/minPrice', options: { placeholder: '$0' } }, { type: 'Control', scope: '#/properties/maxPrice', options: { placeholder: '∞' } }] }, { type: 'Control', scope: '#/properties/sortBy', options: { placeholder: 'Choose sorting...' } }, { type: 'Control', scope: '#/properties/itemsPerPage' }] },
+    data: { searchQuery: '', minPrice: 0, maxPrice: 0, sortBy: 'Price Ascending', itemsPerPage: 20 }
   },
   {
     id: 'i18n',
-    title: 'i18n Demo (TR)',
-    description: 'Turkish locale labels and messages',
+    title: 'i18n Demo',
+    description: 'Locale labels and messages',
     category: 'JSON Forms Deep Dives',
     icon: 'i-heroicons-language',
-    schema: { type: 'object', properties: { ad: { type: 'string', title: 'Ad', minLength: 2 }, soyad: { type: 'string', title: 'Soyad', minLength: 2 }, eposta: { type: 'string', title: 'E-posta', format: 'email' }, telefon: { type: 'string', title: 'Telefon' }, dogumTarihi: { type: 'string', title: 'Doğum Tarihi', format: 'date' }, cinsiyet: { type: 'string', title: 'Cinsiyet', enum: ['Erkek', 'Kadın', 'Belirtmek İstemiyorum'] }, haberler: { type: 'boolean', title: 'Haber Bülteni', default: false } }, required: ['ad', 'soyad', 'eposta'] },
+    schema: { type: 'object', properties: { ad: { type: 'string', title: 'First Name', minLength: 2 }, soyad: { type: 'string', title: 'Last Name', minLength: 2 }, eposta: { type: 'string', title: 'Email', format: 'email' }, telefon: { type: 'string', title: 'Phone' }, dogumTarihi: { type: 'string', title: 'Birth Date', format: 'date' }, cinsiyet: { type: 'string', title: 'Gender', enum: ['Male', 'Female', 'Prefer Not to Say'] }, haberler: { type: 'boolean', title: 'Newsletter', default: false } }, required: ['ad', 'soyad', 'eposta'] },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/ad' }, { type: 'Control', scope: '#/properties/soyad' }] }, { type: 'HorizontalLayout', elements: [{ type: 'Control', scope: '#/properties/eposta' }, { type: 'Control', scope: '#/properties/telefon' }] }, { type: 'Control', scope: '#/properties/dogumTarihi' }, { type: 'Control', scope: '#/properties/cinsiyet', options: { format: 'radio-group' } }, { type: 'Control', scope: '#/properties/haberler' }] },
     data: { ad: '', soyad: '', eposta: '', telefon: '', dogumTarihi: '', cinsiyet: '', haberler: false }
   },
@@ -815,7 +815,7 @@ const examplesData: ShowcaseExample[] = [
     description: 'Common JSON Forms issues: defaults, empty arrays, nulls',
     category: 'JSON Forms Deep Dives',
     icon: 'i-heroicons-bug-ant',
-    schema: { type: 'object', properties: { defaultValue: { type: 'string', title: 'Varsayılan Değer', default: 'test' }, emptyOnPurpose: { type: 'string', title: 'Boş Bırakılacak' }, zeroNumber: { type: 'number', title: 'Sıfır Değer', default: 0 }, falseBoolean: { type: 'boolean', title: 'False Değer', default: false }, emptyArray: { type: 'array', title: 'Boş Dizi', items: { type: 'string' } }, nullObject: { type: 'object', title: 'Null Nesne', properties: { key: { type: 'string', title: 'Anahtar' } }, default: {} }, veryLongLabel: { type: 'string', title: 'Bu çok ama çok uzun bir etiket alanıdır ve taşma durumunu test etmek için kullanılmaktadır' }, specialChars: { type: 'string', title: 'Özel Karakterler (special chars test)' } } },
+    schema: { type: 'object', properties: { defaultValue: { type: 'string', title: 'Default Value', default: 'test' }, emptyOnPurpose: { type: 'string', title: 'Leave Empty' }, zeroNumber: { type: 'number', title: 'Zero Value', default: 0 }, falseBoolean: { type: 'boolean', title: 'False Value', default: false }, emptyArray: { type: 'array', title: 'Empty Array', items: { type: 'string' } }, nullObject: { type: 'object', title: 'Null Object', properties: { key: { type: 'string', title: 'Key' } }, default: {} }, veryLongLabel: { type: 'string', title: 'This is a very very long label field used to test overflow behavior' }, specialChars: { type: 'string', title: 'Special Characters (special chars test)' } } },
     uischema: { type: 'VerticalLayout', elements: [{ type: 'Control', scope: '#/properties/defaultValue' }, { type: 'Control', scope: '#/properties/emptyOnPurpose' }, { type: 'Control', scope: '#/properties/zeroNumber' }, { type: 'Control', scope: '#/properties/falseBoolean' }, { type: 'Control', scope: '#/properties/emptyArray' }, { type: 'Control', scope: '#/properties/nullObject' }, { type: 'Control', scope: '#/properties/veryLongLabel' }, { type: 'Control', scope: '#/properties/specialChars' }] },
     data: { defaultValue: 'test', emptyOnPurpose: '', zeroNumber: 0, falseBoolean: false, emptyArray: [], nullObject: {}, veryLongLabel: '', specialChars: '' }
   },

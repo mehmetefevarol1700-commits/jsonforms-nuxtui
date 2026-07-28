@@ -37,7 +37,7 @@ const maxRating = computed(() => control.value.schema?.maximum ?? 5)
         <button
           type="button"
           :disabled="!control.enabled || control.readonly"
-          :aria-label="`${i} ${i === 1 ? 'yıldız' : 'yıldız'}`"
+          :aria-label="`${i} ${i === 1 ? 'star' : 'stars'}`"
           :aria-pressed="ratingValue >= i"
           class="flex items-center justify-center p-1 rounded transition-all duration-150 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
           @click="ratingValue = i"
@@ -54,7 +54,7 @@ const maxRating = computed(() => control.value.schema?.maximum ?? 5)
       v-if="ratingValue > 0"
       class="text-sm text-gray-500 dark:text-gray-400"
     >
-      {{ ratingValue }} / {{ maxRating }} {{ maxRating === 1 ? 'yıldız' : 'yıldız' }}
+      {{ ratingValue }} / {{ maxRating }} {{ maxRating === 1 ? 'star' : 'stars' }}
     </div>
   </UFormField>
 </template>

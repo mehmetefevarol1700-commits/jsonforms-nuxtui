@@ -23,6 +23,8 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.16.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "eslint": "^10.7.0",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.7"

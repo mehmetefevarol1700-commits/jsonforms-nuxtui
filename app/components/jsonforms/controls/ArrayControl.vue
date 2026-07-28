@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useJsonFormsControl, useJsonFormsArrayControl, rendererProps, DispatchRenderer } from '@jsonforms/vue'
-import type { ControlElement, JsonSchema } from '@jsonforms/core'
+import type { ControlElement, JsonSchema, UISchemaElement } from '@jsonforms/core'
 import { ref, computed, watch } from 'vue'
 import { UIcon, UInput } from '#components'
 
@@ -11,13 +11,13 @@ const { handleChange } = useJsonFormsControl(props)
 
 const draggedIndex = ref<number | null>(null)
 
-const items = computed(() => control.value.data || [])
+const items = computed<unknown[]>(() => (control.value.data as unknown[]) || [])
 
 const itemSchema = computed<JsonSchema | undefined>(() =>
   (control.value.schema as Record<string, unknown>)?.items as JsonSchema | undefined
 )
 
-const detailUischema = computed(() => control.value.uischemas?.[0] ?? null)
+const detailUischema = computed<UISchemaElement | null>(() => (control.value.uischemas?.[0] as unknown as UISchemaElement) ?? null)
 
 const labelKey = computed(() => {
   const schemaProps = itemSchema.value?.properties
@@ -38,6 +38,7 @@ const generateDefaults = (props: Record<string, JsonSchema>): Record<string, unk
 }
 
 const handleAddItem = () => {
+  if (!addItem) return
   const sch = itemSchema.value
   let newItem: unknown
   if (!sch) {
@@ -57,6 +58,7 @@ const handleAddItem = () => {
 }
 
 const handleRemoveItem = (index: number) => {
+  if (!removeItems) return
   removeItems(control.value.path, [index])()
 }
 
@@ -88,7 +90,7 @@ const expandedItems = ref<Set<number>>(new Set())
 
 watch(items, (val) => {
   if (!val) return
-  val.forEach((_, i) => expandedItems.value.add(i))
+  val.forEach((_: unknown, i: number) => expandedItems.value.add(i))
   expandedItems.value = new Set(expandedItems.value)
 }, { immediate: true })
 
@@ -130,8 +132,8 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
         :key="`${control.path}-${index}`"
         class="relative group"
         draggable="true"
-        @dragstart="handleDragStart(index)"
-        @dragover="handleDragOver($event, index)"
+        @dragstart="handleDragStart(Number(index))"
+        @dragover="handleDragOver($event, Number(index))"
         @dragend="handleDragEnd"
       >
         <div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 w-6 h-full flex items-center justify-center text-gray-300 dark:text-gray-500 hover:text-primary-500 cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity">
@@ -150,17 +152,17 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
         >
           <template #header>
             <div class="flex items-center gap-3">
-              <span class="text-sm font-medium text-gray-500 dark:text-gray-400">#{{ index + 1 }}</span>
+              <span class="text-sm font-medium text-gray-500 dark:text-gray-400">#{{ Number(index) + 1 }}</span>
               <h4 class="text-base font-semibold text-gray-900 dark:text-gray-100 truncate">
-                {{ labelKey ? (item[labelKey] ? String(item[labelKey]) : `Öğe ${index + 1}`) : String(item) }}
+                {{ labelKey ? ((item as Record<string, unknown>)[labelKey] ? String((item as Record<string, unknown>)[labelKey]) : `Item ${Number(index) + 1}`) : String(item) }}
               </h4>
             </div>
             <div class="flex items-center gap-1">
               <button
-                v-if="index > 0"
+                v-if="Number(index) > 0"
                 class="p-1.5 rounded-lg text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
-                aria-label="Yukarı taşı"
-                @click="handleMoveItem(index, index - 1)"
+                aria-label="Move up"
+                @click="handleMoveItem(Number(index), Number(index) - 1)"
               >
                 <UIcon
                   name="i-heroicons-chevron-up"
@@ -168,10 +170,10 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
                 />
               </button>
               <button
-                v-if="index < items.length - 1"
+                v-if="Number(index) < items.length - 1"
                 class="p-1.5 rounded-lg text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
-                aria-label="Aşağı taşı"
-                @click="handleMoveItem(index, index + 1)"
+                aria-label="Move down"
+                @click="handleMoveItem(Number(index), Number(index) + 1)"
               >
                 <UIcon
                   name="i-heroicons-chevron-down"
@@ -180,8 +182,8 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
               </button>
               <button
                 class="p-1.5 rounded-lg text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
-                :aria-label="expandedItems.has(index) ? 'Daralt' : 'Genişlet'"
-                @click="toggleItem(index)"
+                :aria-label="expandedItems.has(Number(index)) ? 'Collapse' : 'Expand'"
+                @click="toggleItem(Number(index))"
               >
                 <UIcon
                   :name="expandedItems.has(index) ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
@@ -190,8 +192,8 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
               </button>
               <button
                 class="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                aria-label="Sil"
-                @click="handleRemoveItem(index)"
+                aria-label="Delete"
+                @click="handleRemoveItem(Number(index))"
               >
                 <UIcon
                   name="i-heroicons-trash"
@@ -204,15 +206,15 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
           <template #default>
             <Transition name="slide-fade">
               <div
-                v-show="expandedItems.has(index)"
+                v-show="expandedItems.has(Number(index))"
                 class="space-y-4"
               >
                 <UInput
                   v-if="isPrimitive"
                   :model-value="String(item)"
-                  placeholder="Öğe değerini girin..."
+                  placeholder="Enter item value..."
                   class="w-full"
-                  @update:model-value="(val) => updatePrimitiveItem(index, val)"
+                  @update:model-value="(val: unknown) => updatePrimitiveItem(Number(index), val)"
                 />
                 <DispatchRenderer
                   v-else-if="detailUischema && itemSchema"
@@ -226,7 +228,7 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
                   v-else
                   class="text-sm text-gray-400 italic"
                 >
-                  Şema görünümü yapılandırılmamış
+                  Schema view not configured
                 </p>
               </div>
             </Transition>
@@ -244,7 +246,7 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
         class="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3"
       />
       <p class="text-gray-500 dark:text-gray-400 mb-4">
-        {{ control.label || 'Liste' }} henüz eklenmedi
+        {{ control.label || 'List' }} not added yet
       </p>
       <UButton
         color="primary"
@@ -256,7 +258,7 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
           name="i-heroicons-plus"
           class="w-5 h-5"
         />
-        İlk öğeyi ekle
+        Add first item
       </UButton>
     </div>
 
@@ -275,7 +277,7 @@ const updatePrimitiveItem = (index: number, value: unknown) => {
           name="i-heroicons-plus"
           class="w-5 h-5"
         />
-        Yeni Öğe Ekle
+        Add New Item
       </UButton>
     </div>
   </UFormField>

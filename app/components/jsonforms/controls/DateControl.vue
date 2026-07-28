@@ -32,12 +32,10 @@ const inputId = computed(() => `date-${control.value.path.replace(/[^a-zA-Z0-9]/
       :disabled="!control.enabled"
       :readonly="control.readonly"
       class="w-full"
-      placeholder="Tarih seçin..."
+      placeholder="Select date..."
       :ui="{
-        root: 'relative',
         base: 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-xl shadow-sm transition-all duration-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:shadow-sm',
-        leading: 'text-gray-400 dark:text-gray-500',
-        wrapper: 'relative'
+        leading: 'text-gray-400 dark:text-gray-500'
       }"
       @update:model-value="inputValue = $event"
     />
